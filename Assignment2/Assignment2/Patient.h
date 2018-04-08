@@ -36,6 +36,7 @@ public:
 	}
 	patient(const patient& other) {
 		first = other.first;
+		middle = other.middle;
 		last = other.last;
 		year = other.year;
 		month = other.month;
@@ -48,9 +49,9 @@ public:
 	}
 	~patient() {}
 	void print() const {
-		cout << "name: " << first << " " << middle << " " << last
-			<< " health number:" << setw(8) << setfill('0') << phn << " category:" << category
-			<< " admission time: " << setw(2) << setfill('0') << hour
+		cout << "<name>: " << first << " " << middle << " " << last
+			<< " <health number>:" << setw(8) << setfill('0') << phn << " <category>:" << category
+			<< " <admission time>: " << setw(2) << setfill('0') << hour
 			<< ":" << setw(2) << setfill('0') << minute << endl;
 	};
 	void set_category(string& s) {

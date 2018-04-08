@@ -59,7 +59,7 @@ void Er::add(){
 
 void Er::retry_home(bool is_error){
 	cin.clear();
-	cin.ignore();
+	cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
 	if (is_error) {
 		cout << "Too many invalid selections, System restart at:" << endl;
 	}
@@ -75,8 +75,8 @@ void Er::retry_home(bool is_error){
 
 void Er::retry_category(string & category){
 	cin.clear();
-	cin.ignore();
-	cout << "Too many invalid selections, System restart at:" << endl;
+	cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
+	cout << "Too many invalid selections, category page will be reloaded at:" << endl;
 	for (int i = 3; i >= 1; --i) {
 		cout << i << endl;
 		this_thread::sleep_for(chrono::seconds(1));
@@ -99,16 +99,16 @@ void Er::home_page(){
 	cout << "Seletc: ";
 	cin >> choose;
 	error_times = 0;
-	while (cin.fail() || choose != (int)choose) {
-		cout << "Invalid selection, please try again: ";
-		cin.clear();
-		cin.ignore();
-		cin >> choose;
-		++error_times;
+	while (cin.fail() || choose != (int)choose || choose > 6 || choose < 0) {
 		if (error_times == 5) {
 			retry_home(true);
 			return;
 		}
+		cout << "Invalid selection, please try again: ";
+		cin.clear();
+		cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
+		++error_times;
+		cin >> choose;
 	}
 	switch (static_cast<int>(choose))
 	{
@@ -153,16 +153,16 @@ void Er::category_page(string & category){
 	cout << "Seletc: ";
 	cin >> choose;
 	error_times = 0;
-	while (cin.fail() || choose != (int)choose) {
-		cout << "Invalid selection, please try again: ";
-		cin.clear();
-		cin.ignore();
-		cin >> choose;
-		++error_times;
+	while (cin.fail() || choose != (int)choose || choose > 5 || choose < 0) {
 		if (error_times == 5) {
 			retry_category(category);
 			return;
 		}
+		cout << "Invalid selection, please try again: ";
+		cin.clear();
+		cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
+		++error_times;
+		cin >> choose;
 	}
 	switch (static_cast<int>(choose))
 	{
@@ -218,11 +218,11 @@ void Er::check_input_days(int & year, int & month, int & days){
 	}
 }
 
-void Er::check_input_integer(int lower, int upper, int & value){
+void Er::check_input_integer(int lower, int upper, int& value){
 	while (cin.fail() || value > upper || value < lower) {
 		cout << "Invalid value please try again: ";
 		cin.clear();
-		cin.ignore();
+		cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
 		cin >> value;
 	}
 }

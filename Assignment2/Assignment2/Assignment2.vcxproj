@@ -117,13 +117,12 @@
   <ItemGroup>
     <ClInclude Include="Category.h" />
     <ClInclude Include="ER.h" />
-    <ClInclude Include="ErPatient.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Patient.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ER.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Menu.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

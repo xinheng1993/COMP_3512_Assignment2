@@ -1,12 +1,15 @@
 #include"Menu.h"
+#include "ER.h"
 #include<string>
 using namespace std;
 
 int main() {
-	menu my_menu;
+	Er erSystem;
 	//my_menu.home_page();
-	
-	my_menu.category_page();
+	string s;
+	erSystem.system_start();
+
+	//cout << s << endl;
 	system("pause");
 	return 0;
 }

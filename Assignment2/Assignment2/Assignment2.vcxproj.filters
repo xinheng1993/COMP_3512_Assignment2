@@ -24,18 +24,15 @@
     <ClInclude Include="ER.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ErPatient.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Patient.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Menu.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="ER.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

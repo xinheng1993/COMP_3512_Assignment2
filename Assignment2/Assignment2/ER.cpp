@@ -52,7 +52,7 @@ void Er::add(){
 
 	category_page(category);
 	
-	patient temp(first, middle, last, year, month, days, phn, hour, minute, symptoms, category);
+	erPatient temp(first, middle, last, year, month, days, phn, hour, minute, symptoms, category);
 	patients.push_back(temp);
 	retry_home(false);
 }

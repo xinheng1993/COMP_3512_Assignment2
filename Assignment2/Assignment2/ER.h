@@ -1,13 +1,13 @@
 #pragma once
 #include "Menu.h"
-#include"Patient.h"
 #include"Category.h"
 #include<vector>
 #include<iostream>
+#include "erPatient.h"
 using namespace std;
 class menu;
 class Er : public menu{
-	vector<patient> patients;
+	vector<erPatient> patients;
 	category s;
 	int error_times;
 public:

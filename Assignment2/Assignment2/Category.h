@@ -2,6 +2,7 @@
 #include <string>
 using namespace std;
 class category {
+public:
 	string categorys[6] = {
 		"Critical and life - threatening, requires immediate care",
 		"Critical, requires care very soon",

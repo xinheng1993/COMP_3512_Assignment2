@@ -1,20 +1,29 @@
 #include "Menu.h"
+#include "ER.h"
 #include <thread>
 #include <chrono>
 #include <iomanip>
 #include <string>
-void menu::retry(string page)
+void menu::retry(const char& page)
 {
+	cin.clear();
+	cin.ignore();
 	cout << "Too many invalid selections, System restart at:" << endl;
 	for (int i = 3; i >= 1; --i) {
 		cout << i << endl;
 		this_thread::sleep_for(chrono::seconds(1));
 	}
-	if (page.compare("home_page")) {
+	switch (page)
+	{
+	case 'h':
 		home_page();
-	}
-	else if(page.compare("category_page")){
+		break;
+	case 'c':
 		category_page();
+		break;
+	default:
+		
+		break;
 	}
 }
 
@@ -40,14 +49,14 @@ void menu::home_page(){
 			cin >> choose;
 			++trys;
 			if (trys == 5) {
-				retry("home_page");
-				break;
+				retry('h');
+				return;
 			}
 		}
 		switch (static_cast<int>(choose))
 		{
 		case 1:
-
+			
 			break;
 		case 2:
 
@@ -68,12 +77,12 @@ void menu::home_page(){
 			exit(1);
 			break;
 		default:
-			retry("home_page");
+			retry('h');
 			break;
 		}
 }
 
-void menu::category_page() {
+void menu::category_page(string& category) {
 	double choose;
 	system("cls");
 	cout << "\n----------Enter the category for the patient----------" << endl;
@@ -94,35 +103,32 @@ void menu::category_page() {
 		cin >> choose;
 		++trys;
 		if (trys == 5) {
-			retry("category_page");
-			break;
+			retry('c');
+			return;
 		}
 	}
 	switch (static_cast<int>(choose))
 	{
+	case 0:
+		category = s.categorys[0];
+		break;
 	case 1:
-
+		category = s.categorys[1];
 		break;
 	case 2:
-
+		category = s.categorys[2];
 		break;
 	case 3:
-
+		category = s.categorys[3];
 		break;
 	case 4:
-
+		category = s.categorys[4];
 		break;
 	case 5:
-
-		break;
-	case 6:
-
-		break;
-	case 0:
-		exit(1);
+		category = s.categorys[5];
 		break;
 	default:
-		retry("category_page");
+		retry('c');
 		break;
 	}
 }

@@ -4,10 +4,11 @@
 #include"Category.h"
 #include<vector>
 #include<iostream>
+#include "ErPatient.h"
 using namespace std;
 
 class Er {
-	vector<patient> patients;
+	vector<Er_patient> patients;
 	menu er_menu;
 	category er_category;
 public:
@@ -66,12 +67,9 @@ public:
 		cin >> symptoms;
 		cout << "\n";
 
-		cout << "category";
-
-
-
-
-		//patients.push_back()
+		er_menu.category_page(category);
+		Er_patient temp(first, middle, last, year, month, days, phn, hour, minute, symptoms, category);
+		patients.push_back(temp);
 	}
 
 

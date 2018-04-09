@@ -131,7 +131,9 @@ void Er::home_page(){
 		save_to_file();
 		break;
 	case 5:
-		
+		if (load_file()) {
+			home_page();
+		}
 		break;
 	case 6:
 		print_patient();
@@ -202,6 +204,9 @@ void Er::save_to_file(){
 		fout << (*it).get_first() << "\n"
 			<< (*it).get_middle() << "\n"
 			<< (*it).get_last() << "\n"
+			<< (*it).get_year() << "\n"
+			<< (*it).get_month() << "\n"
+			<< (*it).get_days() << "\n"
 			<< (*it).get_phn() << "\n"
 			<< (*it).get_hour() << "\n"
 			<< (*it).get_minute() << "\n"

@@ -4,6 +4,9 @@
 #include<vector>
 #include<iostream>
 #include "erPatient.h"
+#include <fstream>
+#include<string>
+#include<algorithm>
 using namespace std;
 class menu;
 class Er : public menu{
@@ -23,7 +26,8 @@ public:
 	void print_patient() const {
 		patients.front().print();
 	}
-	void check_input_days(int& year, int& month, int& days);
 
+	void save_to_file();
+	void check_input_days(int& year, int& month, int& days);
 	void check_input_integer(int lower, int upper, int& value);
 };

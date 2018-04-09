@@ -6,7 +6,6 @@ using namespace std;
 
 
 class patient {
-//protected:
 	string first;
 	string middle;
 	string last;
@@ -46,6 +45,37 @@ public:
 		symptoms = other.symptoms;
 	}
 	~patient() {}
+
+	string get_first() const {
+		return first;
+	}
+	string get_middle() const {
+		return middle;
+	}
+	string get_last() const {
+		return last;
+	}
+	int get_year() const {
+		return year;
+	}
+	int get_month() const {
+		return month;
+	}
+	int get_days() const {
+		return days;
+	}
+	int get_phn() const {
+		return phn;
+	}
+	int get_hour() const {
+		return hour;
+	}
+	int get_minute() const {
+		return minute;
+	}
+	string get_symptoms() {
+		return symptoms;
+	}
 	virtual void print() const {
 		cout << "<name>: " << first << " " << middle << " " << last
 			<< " <health number>:" << setw(8) << setfill('0') << phn

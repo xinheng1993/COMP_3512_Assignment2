@@ -15,21 +15,26 @@ void Er::add(){
 	cout << "please enter: " << endl;
 
 	cout << "first name: ";
-	cin >> first;
+	cin.ignore();
+	getline(cin, first);
 
 	cout << "middle name (if no middle name please enter NULL): ";
-	cin >> middle;
+	cin.ignore();
+	getline(cin, middle);
 
 	cout << "last name: ";
-	cin >> last;
+	cin.ignore();
+	getline(cin, last);
 
 	cout << "birth of the year: ";
 	cin >> year;
 	check_input_integer(0, 9999, year);
 
+
 	cout << "birth of the month: ";
 	cin >> month;
 	check_input_integer(1, 12, month);
+
 
 	cout << "birth of the day: ";
 	cin >> days;
@@ -48,7 +53,8 @@ void Er::add(){
 	check_input_integer(0, 59, minute);
 
 	cout << "symptoms: ";
-	cin >> symptoms;
+	cin.ignore();
+	getline(cin, symptoms);
 
 	category_page(category);
 	
@@ -122,7 +128,7 @@ void Er::home_page(){
 
 		break;
 	case 4:
-
+		save_to_file();
 		break;
 	case 5:
 		
@@ -190,6 +196,21 @@ void Er::category_page(string & category){
 	}
 }
 
+void Er::save_to_file(){
+	ofstream fout("patients.txt");
+	for (auto it = patients.begin(); it != patients.end(); ++it) {
+		fout << (*it).get_first() << "\n"
+			<< (*it).get_middle() << "\n"
+			<< (*it).get_last() << "\n"
+			<< (*it).get_phn() << "\n"
+			<< (*it).get_hour() << "\n"
+			<< (*it).get_minute() << "\n"
+			<< (*it).get_symptoms() << "\n"
+			<< (*it).get_category() << "\n";
+	}
+	fout.close();
+}
+
 void Er::check_input_days(int & year, int & month, int & days){
 	if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10
 		|| month == 12) {
@@ -225,4 +246,5 @@ void Er::check_input_integer(int lower, int upper, int& value){
 		cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
 		cin >> value;
 	}
+	cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
 }

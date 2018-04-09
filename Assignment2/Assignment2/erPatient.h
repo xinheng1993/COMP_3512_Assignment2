@@ -17,6 +17,9 @@ public:
 		category = other.category;
 	}
 	~erPatient() {}
+	string get_category() const {
+		return category;
+	}
 	virtual void print() const {
 		patient::print();
 		cout << "<category>: " << category << endl;

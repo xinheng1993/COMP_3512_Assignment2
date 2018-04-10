@@ -198,6 +198,14 @@ void Er::category_page(string & category){
 	}
 }
 
+void Er::print_patient() const{
+	int i = 0;
+	for (auto it = patients.begin(); it != patients.end(); ++it) {
+		cout << ++i << ". ";
+		(*it).print();
+	}
+}
+
 void Er::save_to_file(){
 	ofstream fout("patients.txt");
 	for (auto it = patients.begin(); it != patients.end(); ++it) {
@@ -214,6 +222,51 @@ void Er::save_to_file(){
 			<< (*it).get_category() << "\n";
 	}
 	fout.close();
+}
+
+bool Er::load_file(){
+	ifstream fin("patients.txt");
+	vector<double> data;
+	if (!fin.good()) {
+		cout << "cannot open file" << endl;
+		return false;
+	}
+	else {
+		string buffer;
+		vector<string> temp;
+		while (getline(fin, buffer)) {
+			temp.push_back(buffer);
+		}
+		int number_of_patients = (int)temp.size() / 11;
+		string first;
+		string middle;
+		string last;
+		int year;
+		int month;
+		int days;
+		int phn;
+		int hour;
+		int minute;
+		string symptoms;
+		string category;
+		for (int i = 0; i < number_of_patients; ++i) {
+			first = temp.at(i * 11 + 0);
+			middle = temp.at(i * 11 + 1);
+			last = temp.at(i * 11 + 2);
+			year = stoi(temp.at(i * 11 + 3));
+			month = stoi(temp.at(i * 11 + 4));
+			days = stoi(temp.at(i * 11 + 5));
+			phn = stoi(temp.at(i * 11 + 6));
+			hour = stoi(temp.at(i * 11 + 7));
+			minute = stoi(temp.at(i * 11 + 8));
+			symptoms = temp.at(i * 11 + 9);
+			category = temp.at(i * 11 + 10);
+			erPatient temp(first, middle, last, year, month, days, phn, hour, minute, symptoms, category);
+			patients.push_back(temp);
+		}
+		return true;
+	}
+	fin.close();
 }
 
 void Er::check_input_days(int & year, int & month, int & days){

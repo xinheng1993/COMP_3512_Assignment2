@@ -62,9 +62,9 @@ public:
 		return symptoms;
 	}
 	virtual void print() const {
-		cout << "<name>: " << first << " " << middle << " " << last
-			<< " <health number>:" << setw(8) << setfill('0') << phn
-			<< " <admission time>: " << setw(2) << setfill('0') << hour
+		cout << "<name>: " << first << " " << middle << " " << last << "\n"
+			<< "   <health number>:" << setw(8) << setfill('0') << phn <<"\n"
+			<< "   <admission time>: " << setw(2) << setfill('0') << hour
 			<< ":" << setw(2) << setfill('0') << minute << endl;
 	};
 };

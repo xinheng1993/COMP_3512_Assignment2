@@ -201,15 +201,20 @@ void Er::category_page(string & category){
 
 void Er::sort_patients(){
 	sort(patients.begin(), patients.end(), [=](erPatient a, erPatient b) { 
+		int x, y;
 		if (a.get_category() != b.get_category()) {
-			int x = (int)distance(s.categorys, find(s.categorys, s.categorys + 6, a.get_category()));
-			int y = (int)distance(s.categorys, find(s.categorys, s.categorys + 6, b.get_category()));
-			return (x < y);
+			x = (int)distance(s.categorys, find(s.categorys, s.categorys + 6, a.get_category()));
+			y = (int)distance(s.categorys, find(s.categorys, s.categorys + 6, b.get_category()));			
 		}
 		else if (a.get_hour() != b.get_hour()) {
-
+			x= a.get_hour();
+			y = b.get_hour();
+		} 
+		else if (a.get_minute() != b.get_minute()) {
+			x = a.get_minute();
+			y = b.get_minute();
 		}
-		
+		return (x < y);
 	});
 }
 

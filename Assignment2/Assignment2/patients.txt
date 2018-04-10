@@ -1,18 +1,18 @@
 xin
 
 heng
-1993 02 22
-00000002
-02
-02
-2
-Serious, requires care soon
-zheng
-
-daye
-1999 01 22
-09999888
-23
-32
-hhhh hhhhhh
+1993 09 02
+00002222
+12
+30
+si le
 Critical and life - threatening, requires immediate care
+jack
+
+xu
+123 03 11
+00011111
+12
+35
+asd
+Critical, requires care very soon

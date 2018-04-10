@@ -31,4 +31,6 @@ public:
 	bool load_file();
 	void check_input_days(int& year, int& month, int& days);
 	void check_input_integer(int lower, int upper, int& value);
+	void get_next_patient();
+	void back_home(double &zero);
 };

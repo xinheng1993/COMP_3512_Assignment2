@@ -109,7 +109,8 @@ void Er::home_page(){
 		add_patients();
 		break;
 	case 2:
-
+		get_next_patient();
+		back_home(choose);
 		break;
 	case 3:
 
@@ -128,15 +129,7 @@ void Er::home_page(){
 		break;
 	case 6:
 		print_patient();
-		cout << "press 0 to return to page: ";
-		cin >> choose;
-		while (cin.fail() || choose != (int)choose || choose != 0) {
-			cout << "Invalid, please try again: " << endl;
-			cout << "press 0 to return to page: ";
-			cin.clear();
-			cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
-			cin >> choose;
-		}
+		back_home(choose);
 		home_page();
 		break;
 	case 0:
@@ -239,6 +232,7 @@ void Er::save_to_file(){
 			<< (*it).get_last() << "\n"
 			<< (*it).get_birthday() << "\n"
 			<< setw(8) << setfill('0') << (*it).get_phn() << "\n"
+			<< (*it).get_adminDate() << "\n"
 			<< setw(2) << setfill('0') << (*it).get_hour() << "\n"
 			<< setw(2) << setfill('0') << (*it).get_minute() << "\n"
 			<< (*it).get_symptoms() << "\n"
@@ -260,27 +254,33 @@ bool Er::load_file(){
 		while (getline(fin, buffer)) {
 			temp.push_back(buffer);
 		}
-		int number_of_patients = (int)temp.size() / 9;
+		int number_of_patients = (int)temp.size() / 10;
 
 		string first, middle, last, symptoms, category;
-		int year, month, days, phn, hour, minute;
+		int year, month, days, phn, hour, minute, ad_year, ad_mon, ad_day;
 		patients.clear();
-		string date;
+		string date, admin_date;
 		for (int i = 0; i < number_of_patients; ++i) {
-			first = temp.at(i * 9 + 0);
-			middle = temp.at(i * 9 + 1);
-			last = temp.at(i * 9 + 2);
-			date = temp.at(i * 9 + 3);
+			first = temp.at(i * 10 + 0);
+			middle = temp.at(i * 10 + 1);
+			last = temp.at(i * 10 + 2);
+			date = temp.at(i * 10 + 3);
 			istringstream iss(date);
 			iss >> year;
 			iss >> month;
 			iss >> days;
-			phn = stoi(temp.at(i * 9 + 4));
-			hour = stoi(temp.at(i * 9 + 5));
-			minute = stoi(temp.at(i * 9 + 6));
-			symptoms = temp.at(i * 9 + 7);
-			category = temp.at(i * 9 + 8);
+			phn = stoi(temp.at(i * 10 + 4));
+			admin_date = temp.at(i * 10 + 5);
+			istringstream ad_iss(admin_date);
+			ad_iss >> ad_year;
+			ad_iss >> ad_mon;
+			ad_iss >> ad_day;
+			hour = stoi(temp.at(i * 10 + 6));
+			minute = stoi(temp.at(i * 10 + 7));
+			symptoms = temp.at(i * 10 + 8);
+			category = temp.at(i * 10 + 9);
 			erPatient temp(first, middle, last, year, month, days, phn, hour, minute, symptoms, category);
+			temp.set_adminDate(ad_year, ad_mon, ad_day);
 			patients.push_back(temp);
 		}
 		return true;
@@ -325,3 +325,22 @@ void Er::check_input_integer(int lower, int upper, int& value){
 	}
 	cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
 }
+
+void Er::get_next_patient() {
+	patients.front().print();
+}
+
+void Er::back_home(double & zero)
+{
+	cout << "press 0 to return to page: ";
+	cin >> zero;
+	while (cin.fail() || zero != (int)zero || zero != 0) {
+		cout << "Invalid, please try again: " << endl;
+		cout << "press 0 to return to page: ";
+		cin.clear();
+		cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
+		cin >> zero;
+	}
+	home_page();
+}
+

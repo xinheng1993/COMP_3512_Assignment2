@@ -1,17 +1,8 @@
 #include "ER.h"
 
-void Er::add(){
-	string first;
-	string middle;
-	string last;
-	int year;
-	int month;
-	int days;
-	int phn;
-	int hour;
-	int minute;
-	string symptoms;
-	string category;
+void Er::add_patients(){
+	string first, middle, last, symptoms, category;
+	int year, month, days, phn, hour, minute;
 
 	cout << "first name: ";
 	cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
@@ -90,13 +81,13 @@ void Er::home_page(){
 	double choose;
 	system("cls");
 	cout << "\n----------Queue of patients System----------" << endl;
-	cout << setw(12) << "" << "1.Add new patient" << endl;
-	cout << setw(12) << "" << "2.Get next patient" << endl;
-	cout << setw(12) << "" << "3.Change patient category" << endl;
-	cout << setw(12) << "" << "4.Save patient list" << endl;
-	cout << setw(12) << "" << "5.Load patient list" << endl;
-	cout << setw(12) << "" << "6.Print patient list" << endl;
-	cout << setw(12) << "" << "0.Exit program" << endl;
+	cout << "\t    " << "1.Add new patient" << endl;
+	cout << "\t    " << "2.Get next patient" << endl;
+	cout << "\t    " << "3.Change patient category" << endl;
+	cout << "\t    " << "4.Save patient list" << endl;
+	cout << "\t    " << "5.Load patient list" << endl;
+	cout << "\t    " << "6.Print patient list" << endl;
+	cout << "\t    " << "0.Exit program" << endl;
 	cout << "please enter 0~6 to select" << endl;
 	cout << "Seletc: ";
 	cin >> choose;
@@ -112,10 +103,9 @@ void Er::home_page(){
 		++error_times;
 		cin >> choose;
 	}
-	switch (static_cast<int>(choose))
-	{
+	switch (static_cast<int>(choose)){
 	case 1:
-		add();
+		add_patients();
 		break;
 	case 2:
 
@@ -137,6 +127,16 @@ void Er::home_page(){
 		break;
 	case 6:
 		print_patient();
+		cout << "press 0 to return to page: ";
+		cin >> choose;
+		while (cin.fail() || choose != (int)choose || choose != 0) {
+			cout << "Invalid, please try again: " << endl;
+			cout << "press 0 to return to page: ";
+			cin.clear();
+			cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
+			cin >> choose;
+		}
+		home_page();
 		break;
 	case 0:
 		exit(1);
@@ -151,12 +151,12 @@ void Er::category_page(string & category){
 	double choose;
 	//system("cls");
 	cout << "\n----------Enter the category for the patient----------" << endl;
-	cout << setw(16) << "" << "0.Critical and life - threatening, requires immediate care" << endl;
-	cout << setw(16) << "" << "1.Critical, requires care very soon" << endl;
-	cout << setw(16) << "" << "2.Serious, requires care soon" << endl;
-	cout << setw(16) << "" << "3.Serious" << endl;
-	cout << setw(16) << "" << "4.Non - serious" << endl;
-	cout << setw(16) << "" << "5.Not a priority" << endl;
+	cout << "\t\t" << "0.Critical and life - threatening, requires immediate care" << endl;
+	cout << "\t\t" << "1.Critical, requires care very soon" << endl;
+	cout << "\t\t" << "2.Serious, requires care soon" << endl;
+	cout << "\t\t" << "3.Serious" << endl;
+	cout << "\t\t" << "4.Non - serious" << endl;
+	cout << "\t\t" << "5.Not a priority" << endl;
 	cout << "please enter 0~6 to select" << endl;
 	cout << "Seletc: ";
 	cin >> choose;
@@ -212,9 +212,6 @@ void Er::save_to_file(){
 		fout << (*it).get_first() << "\n"
 			<< (*it).get_middle() << "\n"
 			<< (*it).get_last() << "\n"
-			/*<< (*it).get_year() << "\n"
-			<< (*it).get_month() << "\n"
-			<< (*it).get_days() << "\n"*/
 			<< (*it).get_birthday() << "\n"
 			<< setw(8) << setfill('0') << (*it).get_phn() << "\n"
 			<< setw(2) << setfill('0') << (*it).get_hour() << "\n"
@@ -239,17 +236,10 @@ bool Er::load_file(){
 			temp.push_back(buffer);
 		}
 		int number_of_patients = (int)temp.size() / 9;
-		string first;
-		string middle;
-		string last;
-		int year;
-		int month;
-		int days;
-		int phn;
-		int hour;
-		int minute;
-		string symptoms;
-		string category;
+
+		string first, middle, last, symptoms, category;
+		int year, month, days, phn, hour, minute;
+		patients.clear();
 		for (int i = 0; i < number_of_patients; ++i) {
 			first = temp.at(i * 9 + 0);
 			middle = temp.at(i * 9 + 1);

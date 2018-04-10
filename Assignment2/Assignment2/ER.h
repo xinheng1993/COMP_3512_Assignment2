@@ -5,7 +5,7 @@
 #include<iostream>
 #include "erPatient.h"
 #include <fstream>
-#include <string>
+#include<string>
 #include <sstream>
 #include<algorithm>
 using namespace std;
@@ -16,7 +16,7 @@ class Er : public menu{
 	int error_times;
 public:
 	Er() { error_times = 0; }
-	void add();
+	void add_patients();
 	virtual void retry_home(bool is_error) override;
 	virtual void retry_category(string& category) override;
 	virtual void home_page() override;

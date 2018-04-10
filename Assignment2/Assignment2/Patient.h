@@ -6,17 +6,10 @@ using namespace std;
 
 
 class patient {
-	string first;
-	string middle;
-	string last;
-	//int year;
-	//int month;
-	//int days;
+	string first, middle, last, symptoms;
+	int year, month, days, phn, hour, minute;
 	Date birthday;
-	int phn;
-	int hour;
-	int minute;
-	string symptoms;
+	
 public:
 	patient(){}
 	patient(string _first, string _middle, string _last, 
@@ -25,9 +18,6 @@ public:
 		first = _first;
 		middle = _middle;
 		last = _last;
-		//year = _year;
-		//month = _month;
-		//days = _day;
 		Date temp(_year, _month, _day);
 		birthday = temp;
 		phn = _phn;
@@ -39,9 +29,6 @@ public:
 		first = other.first;
 		middle = other.middle;
 		last = other.last;
-		/*year = other.year;
-		month = other.month;
-		days = other.days;*/
 		birthday = other.birthday;
 		phn = other.phn;
 		hour = other.hour;
@@ -59,15 +46,6 @@ public:
 	string get_last() const {
 		return last;
 	}
-	/*int get_year() const {
-		return year;
-	}
-	int get_month() const {
-		return month;
-	}
-	int get_days() const {
-		return days;
-	}*/
 	Date get_birthday() const {
 		return birthday;
 	}
@@ -80,7 +58,7 @@ public:
 	int get_minute() const {
 		return minute;
 	}
-	string get_symptoms() {
+	string get_symptoms() const{
 		return symptoms;
 	}
 	virtual void print() const {

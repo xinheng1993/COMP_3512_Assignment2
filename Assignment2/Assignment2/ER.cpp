@@ -47,6 +47,7 @@ void Er::add_patients(){
 	
 	erPatient temp(first, middle, last, year, month, days, phn, hour, minute, symptoms, category);
 	patients.push_back(temp);
+	sort_patients();
 	retry_home(false);
 }
 
@@ -198,11 +199,30 @@ void Er::category_page(string & category){
 	}
 }
 
+void Er::sort_patients(){
+	sort(patients.begin(), patients.end(), [=](erPatient a, erPatient b) { 
+		if (a.get_category() != b.get_category()) {
+			int x = (int)distance(s.categorys, find(s.categorys, s.categorys + 6, a.get_category()));
+			int y = (int)distance(s.categorys, find(s.categorys, s.categorys + 6, b.get_category()));
+			return (x < y);
+		}
+		else if (a.get_hour() != b.get_hour()) {
+
+		}
+		
+	});
+}
+
 void Er::print_patient() const{
-	int i = 0;
-	for (auto it = patients.begin(); it != patients.end(); ++it) {
-		cout << ++i << ". ";
-		(*it).print();
+	if (patients.empty()) {
+		cout << "there is no patients: " << endl;
+	}
+	else {
+		int i = 0;
+		for (auto it = patients.begin(); it != patients.end(); ++it) {
+			cout << ++i << ". ";
+			(*it).print();
+		}
 	}
 }
 
@@ -240,11 +260,12 @@ bool Er::load_file(){
 		string first, middle, last, symptoms, category;
 		int year, month, days, phn, hour, minute;
 		patients.clear();
+		string date;
 		for (int i = 0; i < number_of_patients; ++i) {
 			first = temp.at(i * 9 + 0);
 			middle = temp.at(i * 9 + 1);
 			last = temp.at(i * 9 + 2);
-			string date = temp.at(i * 9 + 3);
+			date = temp.at(i * 9 + 3);
 			istringstream iss(date);
 			iss >> year;
 			iss >> month;

@@ -2,12 +2,13 @@
 #include "Menu.h"
 #include"Category.h"
 #include<vector>
-#include<iostream>
+#include <iostream>
 #include "erPatient.h"
 #include <fstream>
-#include<string>
+#include <string>
 #include <sstream>
-#include<algorithm>
+#include <algorithm>
+#include <queue>
 using namespace std;
 class menu;
 class Er : public menu{
@@ -24,6 +25,7 @@ public:
 	void system_start() {
 		home_page();
 	}
+	void sort_patients();
 	void print_patient() const;
 	void save_to_file();
 	bool load_file();

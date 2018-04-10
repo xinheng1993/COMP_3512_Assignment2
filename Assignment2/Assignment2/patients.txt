@@ -1,22 +1,9 @@
 xin
-ULL
-eng
-1993
+
+heng
+1993 02 22
+00000002
+02
+02
 2
-27
-99999999
-23
-32
-hhahahha
-Critical and life - threatening, requires immediate care
-harly
-ULL
-uan
-1999
-9
-9
-99999988
-23
-23
-h h hh
-Critical and life - threatening, requires immediate care
+Serious, requires care soon

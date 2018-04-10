@@ -5,10 +5,9 @@
 using namespace std;
 
 int main() {
-	//Er erSystem;
-	////my_menu.home_page();
-	//
-	//erSystem.system_start();
+	Er erSystem;
+	
+	erSystem.system_start();
 	
 	/*try {
 		Date d(-1, -1, -1);

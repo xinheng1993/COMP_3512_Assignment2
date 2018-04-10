@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <iomanip>
-
+#include "Date.h"
 using namespace std;
 
 
@@ -9,9 +9,10 @@ class patient {
 	string first;
 	string middle;
 	string last;
-	int year;
-	int month;
-	int days;
+	//int year;
+	//int month;
+	//int days;
+	Date birthday;
 	int phn;
 	int hour;
 	int minute;
@@ -24,9 +25,11 @@ public:
 		first = _first;
 		middle = _middle;
 		last = _last;
-		year = _year;
-		month = _month;
-		days = _day;
+		//year = _year;
+		//month = _month;
+		//days = _day;
+		Date temp(_year, _month, _day);
+		birthday = temp;
 		phn = _phn;
 		hour = _hour;
 		minute = _minute;
@@ -36,9 +39,10 @@ public:
 		first = other.first;
 		middle = other.middle;
 		last = other.last;
-		year = other.year;
+		/*year = other.year;
 		month = other.month;
-		days = other.days;
+		days = other.days;*/
+		birthday = other.birthday;
 		phn = other.phn;
 		hour = other.hour;
 		minute = other.minute;
@@ -55,7 +59,7 @@ public:
 	string get_last() const {
 		return last;
 	}
-	int get_year() const {
+	/*int get_year() const {
 		return year;
 	}
 	int get_month() const {
@@ -63,6 +67,9 @@ public:
 	}
 	int get_days() const {
 		return days;
+	}*/
+	Date get_birthday() const {
+		return birthday;
 	}
 	int get_phn() const {
 		return phn;

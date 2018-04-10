@@ -5,7 +5,8 @@
 #include<iostream>
 #include "erPatient.h"
 #include <fstream>
-#include<string>
+#include <string>
+#include <sstream>
 #include<algorithm>
 using namespace std;
 class menu;

@@ -115,8 +115,8 @@ std::ostream&
 operator<<(std::ostream& os, const Date& d)
 {
 	std::ostringstream oss;
-	oss << std::setfill('0') << d.year << '/'
-		<< std::setw(2) << d.month << '/'
+	oss << std::setfill('0') << d.year << " "
+		<< std::setw(2) << d.month << " "
 		<< std::setw(2) << d.day;
 	os << oss.str();
 	return os;

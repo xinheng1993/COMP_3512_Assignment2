@@ -22,6 +22,6 @@ public:
 	}
 	virtual void print() const {
 		patient::print();
-		cout << "<category>: " << category << endl;
+		cout << "   <category>: " << category << endl;
 	};
 };

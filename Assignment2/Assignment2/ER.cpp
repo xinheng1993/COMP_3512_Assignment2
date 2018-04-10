@@ -12,18 +12,15 @@ void Er::add(){
 	int minute;
 	string symptoms;
 	string category;
-	cout << "please enter: " << endl;
 
 	cout << "first name: ";
-	cin.ignore();
+	cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
 	getline(cin, first);
 
-	cout << "middle name (if no middle name please enter NULL): ";
-	cin.ignore();
+	cout << "middle name (No middle name press Enter): ";
 	getline(cin, middle);
 
 	cout << "last name: ";
-	cin.ignore();
 	getline(cin, last);
 
 	cout << "birth of the year: ";
@@ -53,7 +50,6 @@ void Er::add(){
 	check_input_integer(0, 59, minute);
 
 	cout << "symptoms: ";
-	cin.ignore();
 	getline(cin, symptoms);
 
 	category_page(category);
@@ -132,8 +128,12 @@ void Er::home_page(){
 		break;
 	case 5:
 		if (load_file()) {
-			home_page();
+			cout << "load sucessful" << endl;
 		}
+		else {
+			cout << "load faild" << endl;
+		}
+		retry_home(false);
 		break;
 	case 6:
 		print_patient();
@@ -212,12 +212,13 @@ void Er::save_to_file(){
 		fout << (*it).get_first() << "\n"
 			<< (*it).get_middle() << "\n"
 			<< (*it).get_last() << "\n"
-			<< (*it).get_year() << "\n"
+			/*<< (*it).get_year() << "\n"
 			<< (*it).get_month() << "\n"
-			<< (*it).get_days() << "\n"
-			<< (*it).get_phn() << "\n"
-			<< (*it).get_hour() << "\n"
-			<< (*it).get_minute() << "\n"
+			<< (*it).get_days() << "\n"*/
+			<< (*it).get_birthday() << "\n"
+			<< setw(8) << setfill('0') << (*it).get_phn() << "\n"
+			<< setw(2) << setfill('0') << (*it).get_hour() << "\n"
+			<< setw(2) << setfill('0') << (*it).get_minute() << "\n"
 			<< (*it).get_symptoms() << "\n"
 			<< (*it).get_category() << "\n";
 	}
@@ -237,7 +238,7 @@ bool Er::load_file(){
 		while (getline(fin, buffer)) {
 			temp.push_back(buffer);
 		}
-		int number_of_patients = (int)temp.size() / 11;
+		int number_of_patients = (int)temp.size() / 9;
 		string first;
 		string middle;
 		string last;
@@ -250,17 +251,19 @@ bool Er::load_file(){
 		string symptoms;
 		string category;
 		for (int i = 0; i < number_of_patients; ++i) {
-			first = temp.at(i * 11 + 0);
-			middle = temp.at(i * 11 + 1);
-			last = temp.at(i * 11 + 2);
-			year = stoi(temp.at(i * 11 + 3));
-			month = stoi(temp.at(i * 11 + 4));
-			days = stoi(temp.at(i * 11 + 5));
-			phn = stoi(temp.at(i * 11 + 6));
-			hour = stoi(temp.at(i * 11 + 7));
-			minute = stoi(temp.at(i * 11 + 8));
-			symptoms = temp.at(i * 11 + 9);
-			category = temp.at(i * 11 + 10);
+			first = temp.at(i * 9 + 0);
+			middle = temp.at(i * 9 + 1);
+			last = temp.at(i * 9 + 2);
+			string date = temp.at(i * 9 + 3);
+			istringstream iss(date);
+			iss >> year;
+			iss >> month;
+			iss >> days;
+			phn = stoi(temp.at(i * 9 + 4));
+			hour = stoi(temp.at(i * 9 + 5));
+			minute = stoi(temp.at(i * 9 + 6));
+			symptoms = temp.at(i * 9 + 7);
+			category = temp.at(i * 9 + 8);
 			erPatient temp(first, middle, last, year, month, days, phn, hour, minute, symptoms, category);
 			patients.push_back(temp);
 		}

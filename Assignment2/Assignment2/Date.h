@@ -7,7 +7,11 @@ class Date
 	static const int days_in_leap_year[];
 public:
 	Date(int year = 2018, int month = 1, int day = 1);
-
+	Date(const Date& other) {
+		year = other.year;
+		month = other.month;
+		day = other.day;
+	}
 	// Use compiler-generated copy constructor, destructor, and assignment
 	// operator because we are just storing three primitive data members
 
@@ -37,7 +41,8 @@ public:
 	friend bool operator>(const Date& lhs, const Date& rhs);
 	friend bool operator>=(const Date& lhs, const Date& rhs);
 	friend bool operator<=(const Date& lhs, const Date& rhs);
-
+	//Date& operator=(Date& rhs);
+	//friend void swap(Date& first, Date& second);
 	//friend bool compare(const Date lhs, const Date rhs);
 };
 

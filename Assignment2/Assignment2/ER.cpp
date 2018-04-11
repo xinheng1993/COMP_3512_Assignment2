@@ -199,6 +199,9 @@ void Er::sort_patients(){
 			x = (int)distance(s.categorys, find(s.categorys, s.categorys + 6, a.get_category()));
 			y = (int)distance(s.categorys, find(s.categorys, s.categorys + 6, b.get_category()));			
 		}
+		else if (a.get_adminDate() != b.get_adminDate()) {
+			return (a.get_adminDate() < b.get_adminDate());
+		}
 		else if (a.get_hour() != b.get_hour()) {
 			x= a.get_hour();
 			y = b.get_hour();
@@ -279,9 +282,9 @@ bool Er::load_file(){
 			minute = stoi(temp.at(i * 10 + 7));
 			symptoms = temp.at(i * 10 + 8);
 			category = temp.at(i * 10 + 9);
-			erPatient temp(first, middle, last, year, month, days, phn, hour, minute, symptoms, category);
-			temp.set_adminDate(ad_year, ad_mon, ad_day);
-			patients.push_back(temp);
+			erPatient temp_patient(first, middle, last, year, month, days, phn, hour, minute, symptoms, category);
+			temp_patient.get_adminDate().set_date(ad_year, ad_mon, ad_day);
+			patients.push_back(temp_patient);
 		}
 		return true;
 	}

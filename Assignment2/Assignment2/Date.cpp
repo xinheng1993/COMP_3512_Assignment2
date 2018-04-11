@@ -65,6 +65,20 @@ Date::operator--(int)
 	return copy;
 }
 
+//Date & Date::operator=(Date &rhs)
+//{
+//	swap(*this, rhs);
+//	return *this;
+//}
+//
+//void swap(Date& first, Date& second)
+//{
+//	using namespace std;
+//	swap(first.year, second.year);
+//	swap(first.month, second.month);
+//	swap(first.day, second.day);
+//}
+
 Date
 Date::set_date(int year, int month, int day)
 {
@@ -184,6 +198,7 @@ bool operator<=(const Date& lhs, const Date& rhs)
 {
 	return !operator>(lhs, rhs);
 }
+
 
 
 

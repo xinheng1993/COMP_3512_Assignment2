@@ -8,11 +8,9 @@ protected:
 public:
 	erPatient() {};
 	erPatient(string _first, string _middle, string _last,int _year, int _month, int _day, int _phn, 
-		int _hour, int _minute,string _symptoms,string _category):patient(_first, _middle, _last, _year, 
+		int _hour, int _minute,string _symptoms,string _category):patient(_first, _middle, _last, _year,
 			_month, _day,_phn, _hour, _minute, _symptoms) {
-		
 		category = _category;
-		//adminDate = 
 	};
 	erPatient(const erPatient& other):patient(other) {
 		category = other.category;
@@ -21,10 +19,10 @@ public:
 	string get_category() const {
 		return category;
 	};
-	Date get_adminDate() const {
+	Date& get_adminDate() {
 		return adminDate;
 	};
-	void set_adminDate(int & year, int& mon, int &day) {
+	void set_adminDate(int& year, int& mon, int& day) {
 		adminDate = Date(year, mon, day);
 	}
 	virtual void print() const {

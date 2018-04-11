@@ -31,6 +31,7 @@ void Er::add_patients(){
 	cout << "personal healthcare number: ";
 	cin >> phn;
 	check_input_integer(0, 99999999, phn);
+	check_phn(phn);
 
 	cout << "admission hour: ";
 	cin >> hour;
@@ -350,3 +351,18 @@ void Er::back_home(double & zero)
 	home_page();
 }
 
+void Er::check_phn(int& phn) {
+	while (check_exits(phn)) {
+		cout << "personal health number already exsits, please try again: ";
+		cin.clear();
+		cin >> phn;
+	}
+	cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
+}
+bool Er::check_exits(int& val) {
+	for (auto it = patients.begin(); it != patients.end(); ++it) {
+		if (val == (*it).get_phn())
+			return true;
+	}
+	return false;
+}

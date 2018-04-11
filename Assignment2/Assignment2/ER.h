@@ -33,4 +33,6 @@ public:
 	void check_input_integer(int lower, int upper, int& value);
 	void get_next_patient();
 	void back_home(double &zero);
+	void check_phn(int& phn);
+	bool check_exits(int& val);
 };

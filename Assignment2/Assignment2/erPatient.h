@@ -14,6 +14,7 @@ public:
 	};
 	erPatient(const erPatient& other):patient(other) {
 		category = other.category;
+		adminDate = other.adminDate;
 	};
 	~erPatient() {};
 	string get_category() const {
@@ -23,7 +24,7 @@ public:
 		return adminDate;
 	};
 	void set_adminDate(int& year, int& mon, int& day) {
-		adminDate = Date(year, mon, day);
+		adminDate.set_date(year, mon, day);
 	}
 	virtual void print() const {
 		patient::print();

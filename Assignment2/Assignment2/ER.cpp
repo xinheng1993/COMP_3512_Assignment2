@@ -283,8 +283,9 @@ bool Er::load_file(){
 			symptoms = temp.at(i * 10 + 8);
 			category = temp.at(i * 10 + 9);
 			erPatient temp_patient(first, middle, last, year, month, days, phn, hour, minute, symptoms, category);
-			temp_patient.get_adminDate().set_date(ad_year, ad_mon, ad_day);
+			temp_patient.set_adminDate(ad_year, ad_mon, ad_day);
 			patients.push_back(temp_patient);
+
 		}
 		return true;
 	}

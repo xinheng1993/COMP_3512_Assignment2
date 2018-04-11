@@ -117,6 +117,7 @@ void Er::home_page(){
 		break;
 	case 4:
 		save_to_file();
+		retry_home(false);
 		break;
 	case 5:
 		if (load_file()) {
@@ -332,6 +333,7 @@ void Er::check_input_integer(int lower, int upper, int& value){
 
 void Er::get_next_patient() {
 	patients.front().print();
+	patients.pop_front();
 }
 
 void Er::back_home(double & zero)

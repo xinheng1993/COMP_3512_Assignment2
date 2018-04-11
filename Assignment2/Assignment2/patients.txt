@@ -1,3 +1,13 @@
+1992
+
+
+1 01 01
+00000002
+1992 04 11
+01
+00
+1
+Critical and life - threatening, requires immediate care
 xin
 
 heng
@@ -18,3 +28,43 @@ shang
 30
 asd
 Critical and life - threatening, requires immediate care
+zheng
+da
+ye
+1111 02 02
+00000002
+2018 04 10
+02
+02
+2
+Critical and life - threatening, requires immediate care
+88
+
+
+1 01 01
+00000001
+1992 04 11
+00
+45
+12
+Critical, requires care very soon
+1
+
+
+1 01 01
+00000001
+2018 04 11
+00
+00
+1
+Critical, requires care very soon
+2
+
+
+2 02 02
+00000003
+2018 04 11
+12
+00
+2
+Serious

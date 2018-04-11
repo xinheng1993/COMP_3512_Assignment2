@@ -12,7 +12,7 @@
 using namespace std;
 class menu;
 class Er : public menu{
-	vector<erPatient> patients;
+	deque<erPatient> patients;
 	category s;
 	int error_times;
 public:

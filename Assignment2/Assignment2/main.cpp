@@ -10,20 +10,14 @@ int main() {
 	
 	erSystem.system_start();
 	
-	//try {
-	//	Date d(-1, -1, -1);
-	//}
-	//catch (std::invalid_argument e) {
-	//	std::cout << e.what() << std::endl;
-	//}
-
-	//Date today = Date::today();
-	//std::cout << today << std::endl;
-	//today.set_date(1990, 4, 10);
-	//today = Date(1990, 4, 10);
-
-	/*std::cout << today << std::endl;*/
-
+	//vector<int> vec;
+	//vec.push_back(5);
+	//vec.push_back(7);
+	//vec.push_back(9);
+	//vec.erase(vec.begin());
+	//for (unsigned i = 0; i<vec.size(); ++i)
+	//	std::cout << ' ' << vec[i];
+	//std::cout << '\n';
 
 	system("pause");
 	return 0;

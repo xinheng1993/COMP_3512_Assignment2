@@ -32,26 +32,16 @@ public:
 	}
 	~patient() {}
 
-	string get_first() const {
-		return first;
-	}
-	string get_middle() const {
-		return middle;
-	}
-	string get_last() const {
-		return last;
-	}
-	Date get_birthday() const {
-		return birthday;
-	}
-	int get_phn() const {
-		return phn;
-	}
-	string get_symptoms() const{
-		return symptoms;
-	}
+	string get_first() const {return first;}
+	string get_middle() const {return middle;}
+	string get_last() const {return last;}
+	Date get_birthday() const {return birthday;}
+	int get_phn() const {return phn;}
+	string get_symptoms() const{return symptoms;}
+
 	virtual void print() const {
-		cout << "<name>: " << first << " " << middle << " " << last << "\n"
+		cout << setw(72) << setfill('*') << "" << endl;
+		cout << "   <name>: " << first << " " << middle << " " << last << "\n"
 			<< "   <health number>:" << setw(8) << setfill('0') << phn << endl;
-	};
+	}
 };

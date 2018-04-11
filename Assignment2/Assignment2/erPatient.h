@@ -22,27 +22,20 @@ public:
 		adminDate = other.adminDate;
 	};
 	~erPatient() {};
-	int get_hour() const {
-		return admin_hour;
-	}
-	int get_minute() const {
-		return admin_minute;
-	}
-	string get_category() const {
-		return category;
-	};
-	Date& get_adminDate() {
-		return adminDate;
-	};
+	int get_hour() const {return admin_hour;}
+	int get_minute() const {return admin_minute;}
+	string get_category() const {return category;}
+	Date& get_adminDate() {return adminDate;}
+
 	void set_adminDate(int& year, int& mon, int& day) {
 		adminDate.set_date(year, mon, day);
 	}
+
 	virtual void print() const {
 		patient::print();
-		cout << "   <admission time>: " << setw(2) << setfill('0') << admin_hour
+		cout << "   <admin_date>: " << adminDate <<"\n"
+			 << "   <admission time>: " << setw(2) << setfill('0') << admin_hour
 			 << ":" << setw(2) << setfill('0') << admin_minute <<"\n"
-			 << "   <category>: " << category << "\n"
-			 << "   <admin_date>: " << adminDate << endl;
-		
-	};
+			 << "   <category>: " << category << endl;
+	}
 };

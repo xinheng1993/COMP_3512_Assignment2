@@ -1,5 +1,5 @@
 #include "ER.h"
-
+#define LINE_OFFSET 10
 void Er::add_patients(){
 	time_t now = time(0);
 	tm *ltm = localtime(&now);
@@ -36,20 +36,23 @@ void Er::add_patients(){
 	check_input_integer(0, 99999999, phn);
 	check_phn(phn);
 
-	cout << "admission time(HH:MM): ";
+	cout << "admission time[HH:MM]: ";
 	hour = ltm->tm_hour;
 	minute = ltm->tm_min;
-	cout <<"<"<< hour << ":" << minute <<">"<< "\n";
+	cout <<"[" << setw(2) << setfill('0') << hour << ":" << setw(2) << setfill('0') << minute <<"]"<< "\n";
 
 
 	cout << "symptoms: ";
 	getline(cin, symptoms);
 
-	category_page(category);
-	
+	category = category_page();
+
 	erPatient temp(first, middle, last, year, month, days, phn, hour, minute, symptoms, category);
 	patients.push_back(temp);
 	sort_patients();
+	print_border(21);
+	cout << "*Add patients sucess*" << endl;
+	print_border(21);
 	retry_home(false);
 }
 
@@ -60,7 +63,9 @@ void Er::retry_home(bool is_error){
 		cout << "Too many invalid selections, System restart at:" << endl;
 	}
 	else {
-		cout << "return Home Page in 3 seconds:" << endl;
+		cout << setw(31) << setfill('*') << "" << endl;
+		cout << "*return Home Page in 3 seconds*" << endl;
+		cout << setw(31) << setfill('*') << "" << endl;
 	}
 	for (int i = 3; i >= 1; --i) {
 		cout << i << endl;
@@ -69,16 +74,6 @@ void Er::retry_home(bool is_error){
 	home_page();
 }
 
-void Er::retry_category(string & category){
-	cin.clear();
-	cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
-	cout << "Too many invalid selections, category page will be reloaded at:" << endl;
-	for (int i = 3; i >= 1; --i) {
-		cout << i << endl;
-		this_thread::sleep_for(chrono::seconds(1));
-	}
-	category_page(category);
-}
 
 void Er::home_page(){
 	double choose;
@@ -94,18 +89,7 @@ void Er::home_page(){
 	cout << "please enter 0~6 to select" << endl;
 	cout << "Seletc: ";
 	cin >> choose;
-	error_times = 0;
-	while (cin.fail() || choose != (int)choose || choose > 6 || choose < 0) {
-		if (error_times == 5) {
-			retry_home(true);
-			return;
-		}
-		cout << "Invalid selection, please try again: ";
-		cin.clear();
-		cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
-		++error_times;
-		cin >> choose;
-	}
+	check_page_choose(choose, 6, 0);
 	switch (static_cast<int>(choose)){
 	case 1:
 		add_patients();
@@ -123,17 +107,20 @@ void Er::home_page(){
 		break;
 	case 5:
 		if (load_file()) {
-			cout << "load sucessful" << endl;
+			print_border(13);
+			cout << "*load Sucess*" << endl;
+			print_border(13);
 		}
 		else {
-			cout << "load faild" << endl;
+			print_border(35);
+			cout << "*load faild, please check you file*" << endl;
+			print_border(35);
 		}
 		retry_home(false);
 		break;
 	case 6:
 		print_patient();
 		back_home(choose);
-		home_page();
 		break;
 	case 0:
 		exit(1);
@@ -144,7 +131,7 @@ void Er::home_page(){
 	}
 }
 
-void Er::category_page(string & category){
+string Er::category_page(){
 	double choose;
 	//system("cls");
 	cout << "\n----------Enter the category for the patient----------" << endl;
@@ -154,43 +141,34 @@ void Er::category_page(string & category){
 	cout << "\t\t" << "3.Serious" << endl;
 	cout << "\t\t" << "4.Non - serious" << endl;
 	cout << "\t\t" << "5.Not a priority" << endl;
-	cout << "please enter 0~6 to select" << endl;
+	cout << "please enter 0~5 to select" << endl;
 	cout << "Seletc: ";
 	cin >> choose;
-	error_times = 0;
-	while (cin.fail() || choose != (int)choose || choose > 5 || choose < 0) {
-		if (error_times == 5) {
-			retry_category(category);
-			return;
-		}
-		cout << "Invalid selection, please try again: ";
-		cin.clear();
-		cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
-		++error_times;
-		cin >> choose;
-	}
+
+	check_page_choose(choose, 5, 0);
 	switch (static_cast<int>(choose))
 	{
 	case 0:
-		category = s.categorys[0];
+		return s.categorys[0];
 		break;
 	case 1:
-		category = s.categorys[1];
+		return s.categorys[1];
 		break;
 	case 2:
-		category = s.categorys[2];
+		return s.categorys[2];
 		break;
 	case 3:
-		category = s.categorys[3];
+		return s.categorys[3];
 		break;
 	case 4:
-		category = s.categorys[4];
+		return s.categorys[4];
 		break;
 	case 5:
-		category = s.categorys[5];
+		return s.categorys[5];
 		break;
 	default:
-		retry_category(category);
+		cout << "error,please retry!";
+		return category_page();
 		break;
 	}
 }
@@ -217,14 +195,17 @@ void Er::sort_patients(){
 	});
 }
 
-void Er::print_patient() const{
+void Er::print_patient(){
 	if (patients.empty()) {
-		cout << "there is no patients: " << endl;
+		print_border(23);
+		cout << "*There is no patients *"<<"\n"<<"*please check you list*"<<"\n"
+			 << "*or load file first!  *" << endl;
+		print_border(23);
 	}
 	else {
 		int i = 0;
 		for (auto it = patients.begin(); it != patients.end(); ++it) {
-			cout << ++i << ". ";
+			cout << ++i << ".";
 			(*it).print();
 		}
 	}
@@ -251,7 +232,9 @@ bool Er::load_file(){
 	ifstream fin("patients.txt");
 	vector<double> data;
 	if (!fin.good()) {
-		cout << "cannot open file" << endl;
+		print_border(18);
+		cout << "*cannot open file*" << endl;
+		print_border(18);
 		return false;
 	}
 	else {
@@ -260,31 +243,31 @@ bool Er::load_file(){
 		while (getline(fin, buffer)) {
 			temp.push_back(buffer);
 		}
-		int number_of_patients = (int)temp.size() / 10;
+		int number_of_patients = (int)temp.size() / LINE_OFFSET;
 
 		string first, middle, last, symptoms, category;
 		int year, month, days, phn, hour, minute, ad_year, ad_mon, ad_day;
 		patients.clear();
 		string date, admin_date;
 		for (int i = 0; i < number_of_patients; ++i) {
-			first = temp.at(i * 10 + 0);
-			middle = temp.at(i * 10 + 1);
-			last = temp.at(i * 10 + 2);
-			date = temp.at(i * 10 + 3);
+			first = temp.at(i * LINE_OFFSET + 0);
+			middle = temp.at(i * LINE_OFFSET + 1);
+			last = temp.at(i * LINE_OFFSET + 2);
+			date = temp.at(i * LINE_OFFSET + 3);
 			istringstream iss(date);
 			iss >> year;
 			iss >> month;
 			iss >> days;
-			phn = stoi(temp.at(i * 10 + 4));
-			admin_date = temp.at(i * 10 + 5);
+			phn = stoi(temp.at(i * LINE_OFFSET + 4));
+			admin_date = temp.at(i * LINE_OFFSET + 5);
 			istringstream ad_iss(admin_date);
 			ad_iss >> ad_year;
 			ad_iss >> ad_mon;
 			ad_iss >> ad_day;
-			hour = stoi(temp.at(i * 10 + 6));
-			minute = stoi(temp.at(i * 10 + 7));
-			symptoms = temp.at(i * 10 + 8);
-			category = temp.at(i * 10 + 9);
+			hour = stoi(temp.at(i * LINE_OFFSET + 6));
+			minute = stoi(temp.at(i * LINE_OFFSET + 7));
+			symptoms = temp.at(i * LINE_OFFSET + 8);
+			category = temp.at(i * LINE_OFFSET + 9);
 			erPatient temp_patient(first, middle, last, year, month, days, phn, hour, minute, symptoms, category);
 			temp_patient.set_adminDate(ad_year, ad_mon, ad_day);
 			patients.push_back(temp_patient);
@@ -334,16 +317,27 @@ void Er::check_input_integer(int lower, int upper, int& value){
 }
 
 void Er::get_next_patient() {
-	patients.front().print();
-	patients.pop_front();
+	if (!patients.empty()) {
+		patients.front().print();
+		patients.pop_front();
+	}
+	else {
+		print_border(27);
+		cout << "*There is no more patients*" << endl;
+		print_border(27);
+	}
+
 }
 
 void Er::back_home(double & zero)
 {
+	print_border(28);
 	cout << "press 0 to return to page: ";
 	cin >> zero;
 	while (cin.fail() || zero != (int)zero || zero != 0) {
-		cout << "Invalid, please try again: " << endl;
+		print_border(27);
+		cout << "*Invalid, please try again* " << endl;
+		print_border(27);
 		cout << "press 0 to return to page: ";
 		cin.clear();
 		cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
@@ -354,7 +348,10 @@ void Er::back_home(double & zero)
 
 void Er::check_phn(int& phn) {
 	while (check_exits(phn)) {
-		cout << "personal health number already exsits, please try again: ";
+		print_border(39);
+		cout << "*personal health number already exsits*" << endl;
+		print_border(39);
+		cout << "please try again: ";
 		cin.clear();
 		cin >> phn;
 	}
@@ -365,4 +362,16 @@ bool Er::check_exits(int& val) {
 			return true;
 	}
 	return false;
+}
+void Er::check_page_choose(double& choose, int upper,int lower) {
+	while (cin.fail() || choose != (int)choose || choose > 6 || choose < 0) {
+		cout << "Invalid selection, please try again: ";
+		cin.clear();
+		cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
+		cin >> choose;
+	}
+}
+
+void Er::print_border(int number){
+	cout << setw(number) << setfill('*') << "" << endl;
 }

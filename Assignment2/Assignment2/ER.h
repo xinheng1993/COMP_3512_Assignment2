@@ -14,25 +14,27 @@ class menu;
 class Er : public menu{
 	deque<erPatient> patients;
 	category s;
-	int error_times;
 public:
-	Er() { error_times = 0; }
-	void add_patients();
+	Er() {}
+	
 	virtual void retry_home(bool is_error) override;
-	virtual void retry_category(string& category) override;
 	virtual void home_page() override;
-	virtual void category_page(string& category) override;
-	void system_start() {
-		home_page();
-	}
+	virtual string category_page() override;
+	void system_start() {home_page();}
+
+	void add_patients();
 	void sort_patients();
-	void print_patient() const;
+	void get_next_patient();
+	void print_patient();
 	void save_to_file();
 	bool load_file();
+
+	void back_home(double &zero);
+
 	void check_input_days(int& year, int& month, int& days);
 	void check_input_integer(int lower, int upper, int& value);
-	void get_next_patient();
-	void back_home(double &zero);
 	void check_phn(int& phn);
 	bool check_exits(int& val);
+	void check_page_choose(double& choose, int upper, int lower);
+	void print_border(int number);
 };

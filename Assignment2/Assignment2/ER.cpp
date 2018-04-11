@@ -1,6 +1,9 @@
 #include "ER.h"
 
 void Er::add_patients(){
+	time_t now = time(0);
+	tm *ltm = localtime(&now);
+
 	string first, middle, last, symptoms, category;
 	int year, month, days, phn, hour, minute;
 
@@ -33,13 +36,11 @@ void Er::add_patients(){
 	check_input_integer(0, 99999999, phn);
 	check_phn(phn);
 
-	cout << "admission hour: ";
-	cin >> hour;
-	check_input_integer(0, 23, hour);
+	cout << "admission time(HH:MM): ";
+	hour = ltm->tm_hour;
+	minute = ltm->tm_min;
+	cout <<"<"<< hour << ":" << minute <<">"<< "\n";
 
-	cout << "admission minutes: ";
-	cin >> minute;
-	check_input_integer(0, 59, minute);
 
 	cout << "symptoms: ";
 	getline(cin, symptoms);
@@ -357,7 +358,6 @@ void Er::check_phn(int& phn) {
 		cin.clear();
 		cin >> phn;
 	}
-	cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
 }
 bool Er::check_exits(int& val) {
 	for (auto it = patients.begin(); it != patients.end(); ++it) {

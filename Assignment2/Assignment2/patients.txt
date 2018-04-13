@@ -1,70 +1,20 @@
-1992
+nima
 
-
-1 01 01
-00010002
-1992 04 11
-01
-00
-1
-Critical and life - threatening, requires immediate care
+cao
+1995 12 05
+00001100
+2018 04 13
+14
+46
+asd
+Serious
 xin
 
 heng
-1231 12 01
-00000123
-1993 04 11
-05
-30
-si le
-Critical and life - threatening, requires immediate care
-cooper
-
-shang
-1231 12 01
-00000012
-1993 04 11
-11
-30
-asd
-Critical and life - threatening, requires immediate care
-zheng
-da
-ye
-1111 02 02
-02000002
-2018 04 10
-02
-02
-2
-Critical and life - threatening, requires immediate care
-88
-
-
-1 01 01
-00100001
-1992 04 11
-00
-45
-12
-Critical, requires care very soon
-1
-
-
-1 01 01
-00000001
-2018 04 11
-00
-00
-1
-Critical, requires care very soon
-2
-
-
-2 02 02
-00000003
-2018 04 11
-12
-00
-2
-Serious
+1994 01 01
+00001011
+2018 04 13
+14
+37
+ganmao
+Not a priority

@@ -28,9 +28,9 @@ public:
 	void print_patient();
 	void save_to_file();
 	bool load_file();
-
+	void change_category();
 	void back_home(double &zero);
-
+	void find_patient(int patient_phn);
 	void check_input_days(int& year, int& month, int& days);
 	void check_input_integer(int lower, int upper, int& value);
 	void check_phn(int& phn);

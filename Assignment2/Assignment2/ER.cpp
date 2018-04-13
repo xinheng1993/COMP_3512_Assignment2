@@ -74,7 +74,6 @@ void Er::retry_home(bool is_error){
 	home_page();
 }
 
-
 void Er::home_page(){
 	double choose;
 	system("cls");
@@ -99,7 +98,7 @@ void Er::home_page(){
 		back_home(choose);
 		break;
 	case 3:
-
+		change_category();
 		break;
 	case 4:
 		save_to_file();
@@ -278,6 +277,33 @@ bool Er::load_file(){
 	fin.close();
 }
 
+void Er::change_category()
+{
+	if (patients.empty()) {
+		print_border(23);
+		cout << "*There is no patients *" << "\n" << "*please check you list*" << "\n"
+			<< "*or load file first!  *" << endl;
+		print_border(23);
+		retry_home(false);
+	}
+	else{
+		print_patient();
+		cout << "Please enter the patient's personal health number that "
+			<< "you would like to change." << endl;
+		int phn_to_change;
+		cin >> phn_to_change;
+		check_input_integer(0, 99999999, phn_to_change);
+		find_patient(phn_to_change);
+
+		cout << "Please enter new category number for this patient" << endl;
+		int new_category;
+		cin >> new_category;
+
+		cout << "phn: " << phn_to_change << "\t new cate: " << new_category << endl;
+		retry_home(false);
+	}
+}
+
 void Er::check_input_days(int & year, int & month, int & days){
 	if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10
 		|| month == 12) {
@@ -346,6 +372,21 @@ void Er::back_home(double & zero)
 	home_page();
 }
 
+void Er::find_patient(int patient_phn)
+{
+	
+	for (auto it = patients.begin(); it != patients.end(); ++it) {
+		if ((*it).get_phn() == patient_phn) {
+			(*it).print();
+			return;
+		}		
+	}
+	cout << "Sorry, the personal health number you entered may not correct. \n"
+		<< "Please try again.\n" << endl;
+
+	change_category();
+}
+
 void Er::check_phn(int& phn) {
 	while (check_exits(phn)) {
 		print_border(39);
@@ -356,6 +397,7 @@ void Er::check_phn(int& phn) {
 		cin >> phn;
 	}
 }
+
 bool Er::check_exits(int& val) {
 	for (auto it = patients.begin(); it != patients.end(); ++it) {
 		if (val == (*it).get_phn())
@@ -363,6 +405,7 @@ bool Er::check_exits(int& val) {
 	}
 	return false;
 }
+
 void Er::check_page_choose(double& choose, int upper,int lower) {
 	while (cin.fail() || choose != (int)choose || choose > 6 || choose < 0) {
 		cout << "Invalid selection, please try again: ";

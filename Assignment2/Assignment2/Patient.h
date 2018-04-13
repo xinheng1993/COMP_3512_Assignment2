@@ -38,7 +38,6 @@ public:
 	Date get_birthday() const {return birthday;}
 	int get_phn() const {return phn;}
 	string get_symptoms() const{return symptoms;}
-
 	virtual void print() const {
 		cout << setw(72) << setfill('*') << "" << endl;
 		cout << "   <name>: " << first << " " << middle << " " << last << "\n"

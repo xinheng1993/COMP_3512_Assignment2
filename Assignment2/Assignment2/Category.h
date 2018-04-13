@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 using namespace std;
-class category {
+class Category {
 public:
 	string categorys[6] = {
 		"Critical and life - threatening, requires immediate care",

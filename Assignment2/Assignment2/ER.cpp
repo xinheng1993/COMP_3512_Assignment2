@@ -166,7 +166,7 @@ string Er::category_page(){
 		return s.categorys[5];
 		break;
 	default:
-		cout << "error,please retry!";
+		cout << "error, please retry!";
 		return category_page();
 		break;
 	}
@@ -292,14 +292,16 @@ void Er::change_category()
 			<< "you would like to change." << endl;
 		int phn_to_change;
 		cin >> phn_to_change;
-		check_input_integer(0, 99999999, phn_to_change);
+		check_input_integer(0, 99999999, phn_to_change);	
 		find_patient(phn_to_change);
 
 		cout << "Please enter new category number for this patient" << endl;
+
 		int new_category;
 		cin >> new_category;
-
-		cout << "phn: " << phn_to_change << "\t new cate: " << new_category << endl;
+		
+		find_patient(phn_to_change).set_cate(new_category);
+		sort_patients();
 		retry_home(false);
 	}
 }
@@ -372,18 +374,16 @@ void Er::back_home(double & zero)
 	home_page();
 }
 
-void Er::find_patient(int patient_phn)
-{
-	
+erPatient& Er::find_patient(int patient_phn)
+{	
 	for (auto it = patients.begin(); it != patients.end(); ++it) {
 		if ((*it).get_phn() == patient_phn) {
-			(*it).print();
-			return;
+			return (*it);
 		}		
 	}
+	system("cls");
 	cout << "Sorry, the personal health number you entered may not correct. \n"
 		<< "Please try again.\n" << endl;
-
 	change_category();
 }
 

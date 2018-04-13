@@ -26,7 +26,10 @@ public:
 	int get_minute() const {return admin_minute;}
 	string get_category() const {return category;}
 	Date& get_adminDate() {return adminDate;}
-
+	void set_cate(int cate_idx){ 
+		Category c;
+		category = c.categorys[cate_idx];
+	};
 	void set_adminDate(int& year, int& mon, int& day) {
 		adminDate.set_date(year, mon, day);
 	}

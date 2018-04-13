@@ -296,11 +296,8 @@ void Er::change_category()
 		find_patient(phn_to_change);
 
 		cout << "Please enter new category number for this patient" << endl;
-
-		int new_category;
-		cin >> new_category;
 		
-		find_patient(phn_to_change).set_cate(new_category);
+		find_patient(phn_to_change).set_cate(category_page());
 		sort_patients();
 		retry_home(false);
 	}

@@ -21,6 +21,12 @@ public:
 	virtual void home_page() override;
 	virtual string category_page() override;
 	void system_start() {home_page();}
+	// being call in home page
+	void promotion();
+	void get_non_critical();
+	bool compare_date(Date admin_date, int admin_hr, int admin_min, int promo_min);
+	void promo_cate(erPatient& temp);
+	int get_cate_num(string);
 
 	void add_patients();
 	void sort_patients();

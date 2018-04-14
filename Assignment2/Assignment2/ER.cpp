@@ -1,5 +1,113 @@
 #include "ER.h"
 #define LINE_OFFSET 10
+void Er::promotion()
+{
+	get_non_critical();
+}
+
+void Er::get_non_critical() {
+	// 2. filter list find non critical
+	for (auto it = patients.begin(); it != patients.end(); ++it) {
+		if ((*it).get_category().find("Critical") == string::npos) {
+			promo_cate(*it);
+		}
+	}
+}
+
+bool Er::compare_date(Date admin_date, int admin_hr, int admin_min, int promo_min) {
+	//4. compare date
+	int admin_year = admin_date.get_year();
+	int admin_mon = admin_date.get_month();
+	int admin_day = admin_date.get_day();
+	// set time now
+	time_t now = time(0);
+	tm *ltm = localtime(&now);
+	int hour = ltm->tm_hour;
+	int minute = ltm->tm_min;
+	int year = ltm->tm_year + 1900;
+	int mon = ltm->tm_mon + 1;
+	int day = ltm->tm_mday;
+	// total time in minutes
+	int total_admin = admin_hr * 60 + admin_min;
+	int total_min = hour * 60 + minute;
+	if (admin_year == year) {
+		if (admin_mon == mon) {
+			if (admin_day == day) {
+				return (total_min - total_admin >= promo_min) ? true : false;				
+			}
+			else { // diff day
+				int diff_day = day - admin_day;
+				total_min += 24 * diff_day * 60;
+				return (total_min - total_admin >= promo_min) ? true : false;			
+			}
+		}
+		else { //diff month
+			total_min += mon * 24 * 60;
+			total_admin += admin_mon * 24 * 60;
+			return (total_min - total_admin >= promo_min) ? true : false;
+		}
+	}
+	else {
+		total_min += year * 24 * 60;
+		total_admin += admin_year * 24 * 60;
+		return (total_min - total_admin >= promo_min) ? true : false;
+	}
+}
+
+void Er::promo_cate(erPatient& temp) {
+	//3. find sepecific 
+	//get sepecific promotion rule
+	int cate_num = get_cate_num(temp.get_category());
+	Date admin_date = temp.get_adminDate();
+	int admin_hr = temp.get_hour();
+	int admin_min = temp.get_minute();
+	switch (cate_num)
+	{
+	case 2:
+		if (compare_date(admin_date,admin_hr,admin_min,60)) {
+			temp.set_cate("Critical, requires care very soon");
+			break;
+		}
+		break;
+	case 3:
+		if (compare_date(admin_date, admin_hr, admin_min,120)) {
+			temp.set_cate("Serious, requires care soon");
+			break;
+		}
+		break;
+	case 4:
+		if (compare_date(admin_date, admin_hr, admin_min,180)) {
+			temp.set_cate("Serious");
+			break;
+		}
+		break;
+	case 5:
+		if (compare_date(admin_date, admin_hr, admin_min,240)) {
+			temp.set_cate("Non - serious");
+			break;
+		}
+		break;
+	default:
+		break;
+	}
+	
+}
+
+int Er::get_cate_num(string cate_name) {
+	if (cate_name.compare("Serious, requires care soon") == 0) {
+		return 2;
+	}
+	else if (cate_name.compare("Serious") == 0) {
+		return 3;
+	}
+	else if (cate_name.compare("Non - serious") == 0) {
+		return 4;
+	}
+	else {
+		return 5;
+	}
+}
+
 void Er::add_patients(){
 	time_t now = time(0);
 	tm *ltm = localtime(&now);
@@ -118,6 +226,9 @@ void Er::home_page(){
 		retry_home(false);
 		break;
 	case 6:
+		if (!patients.empty()) {
+			promotion();
+		}
 		print_patient();
 		back_home(choose);
 		break;

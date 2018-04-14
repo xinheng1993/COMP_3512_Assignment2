@@ -136,55 +136,84 @@ int Er::get_cate_num(string cate_name) {
 		return 5;
 	}
 }
-//break input piece by piece
-void Er::add_patients(){
-	time_t now = time(0);
-	tm *ltm = localtime(&now);
 
-	string first, middle, last, symptoms, category;
-	int year, month, days, phn, hour, minute;
-
+void Er::enter_first_name(string & first)
+{
 	cout << "first name: ";
 	cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
 	getline(cin, first);
+}
 
+void Er::enter_middle_name(string & middle)
+{
 	cout << "middle name (No middle name press Enter): ";
 	getline(cin, middle);
+}
 
+void Er::enter_last_name(string & last)
+{
 	cout << "last name: ";
 	getline(cin, last);
+}
 
+void Er::enter_birth_days(int& year, int& month, int & days)
+{
 	cout << "birth of the year: ";
 	cin >> year;
 	check_input_integer(0, 9999, year);
-
 
 	cout << "birth of the month: ";
 	cin >> month;
 	check_input_integer(1, 12, month);
 
-
 	cout << "birth of the day: ";
 	cin >> days;
 	check_input_days(year, month, days);
+}
 
+void Er::enter_personal_number(int & phn)
+{
 	cout << "personal healthcare number: ";
 	cin >> phn;
 	check_input_integer(0, 99999999, phn);
 	check_phn(phn);
+}
 
+void Er::initialize_admin_time(int & hour, int & minute)
+{
+	time_t now = time(0);
+	tm *ltm = localtime(&now);
 	cout << "admission time[HH:MM]: ";
 	hour = ltm->tm_hour;
 	minute = ltm->tm_min;
-	cout <<"[" << setw(2) << setfill('0') << hour << ":" << setw(2) << setfill('0') << minute <<"]"<< "\n";
+	cout << "[" << setw(2) << setfill('0') << hour << ":" << setw(2) << setfill('0') << minute << "]" << "\n";
+}
 
-
+void Er::enter_symptoms(string & symptoms)
+{
 	cout << "symptoms: ";
 	getline(cin, symptoms);
+}
 
+void Er::choose_category(string & category)
+{
 	category = category_page();
+}
+
+void Er::add_patients(){
+	string first, middle, last, symptoms, category;
+	int year, month, days, phn, hour, minute;
+
+	enter_first_name(first);
+	enter_middle_name(middle);
+	enter_last_name(last);
+	enter_birth_days(year, month, days);
+	enter_personal_number(phn);
+	initialize_admin_time(hour, minute);
+	choose_category(category);
 
 	erPatient temp(first, middle, last, year, month, days, phn, hour, minute, symptoms, category);
+
 	patients.push_back(temp);
 	sort_patients();
 	print_border(21);

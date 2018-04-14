@@ -21,20 +21,17 @@ public:
 	virtual void home_page() override;
 	virtual string category_page() override;
 	void system_start() {home_page();}
-	// being call in home page
 	void update_queue();
 	void get_non_critical();
 	bool compare_date(Date admin_date, int admin_hr, int admin_min, int promo_min);
 	void promo_cate(erPatient& temp);
 	int get_cate_num(string);
 
-	//input function
+	//input functions
 	void enter_first_name(string& first);
 	void enter_middle_name(string& middle);
 	void enter_last_name(string& last);
-	void enter_birth_year(int& year);
-	void enter_birth_month(int& month);
-	void enter_birth_days(int& days);
+	void enter_birth_days(int& year, int& month, int & days);
 	void enter_personal_number(int& phn);
 	void initialize_admin_time(int& hour, int& minute);
 	void enter_symptoms(string& symptoms);

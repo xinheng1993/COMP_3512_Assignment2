@@ -1,5 +1,10 @@
 #include "ER.h"
 #define LINE_OFFSET 12
+#define BIG_MONTH_DAY 31
+#define SMALL_MONTH_DAY 30
+#define LEAP_YEAR_FEB 29
+#define NON_LEAP_YEAR_FEB 28
+#define FIRST_DAY 1
 void Er::update_queue()
 {
 	if (!patients.empty()) {
@@ -131,7 +136,7 @@ int Er::get_cate_num(string cate_name) {
 		return 5;
 	}
 }
-
+//break input piece by piece
 void Er::add_patients(){
 	time_t now = time(0);
 	tm *ltm = localtime(&now);
@@ -238,16 +243,7 @@ void Er::home_page(){
 		retry_home(false);
 		break;
 	case 5:
-		if (load_file()) {
-			print_border(13);
-			cout << "*load Sucess*" << endl;
-			print_border(13);
-		}
-		else {
-			print_border(35);
-			cout << "*load faild, please check you file*" << endl;
-			print_border(35);
-		}
+		load_patients_list();
 		retry_home(false);
 		break;
 	case 6:
@@ -422,6 +418,19 @@ bool Er::load_file(){
 	fin.close();
 }
 
+void Er::load_patients_list(){
+	if (load_file()) {
+		print_border(13);
+		cout << "*load Sucess*" << endl;
+		print_border(13);
+	}
+	else {
+		print_border(35);
+		cout << "*load faild, please check you file*" << endl;
+		print_border(35);
+	}
+}
+
 void Er::change_category()
 {
 	if (patients.empty()) {
@@ -448,23 +457,23 @@ void Er::check_input_days(int & year, int & month, int & days){
 		check_input_integer(1, 31, days);
 	}
 	else if (month == 4 || month == 6 || month == 9 || month == 11) {
-		check_input_integer(1, 30, days);
+		check_input_integer(FIRST_DAY, SMALL_MONTH_DAY, days);
 	}
 	else if (month == 2) {
 		if (year % 100 != 0) {
 			if (year % 4 == 0) {
-				check_input_integer(1, 29, days);
+				check_input_integer(FIRST_DAY, LEAP_YEAR_FEB, days);
 			}
 			else {
-				check_input_integer(1, 28, days);
+				check_input_integer(FIRST_DAY, NON_LEAP_YEAR_FEB, days);
 			}
 		}
 		else {
 			if (year % 400 == 0) {
-				check_input_integer(1, 29, days);
+				check_input_integer(FIRST_DAY, LEAP_YEAR_FEB, days);
 			}
 			else {
-				check_input_integer(1, 28, days);
+				check_input_integer(FIRST_DAY, NON_LEAP_YEAR_FEB, days);
 			}
 		}
 	}
@@ -547,7 +556,7 @@ bool Er::check_exits(int& val) {
 }
 
 void Er::check_page_choose(double& choose, int upper,int lower) {
-	while (cin.fail() || choose != (int)choose || choose > 6 || choose < 0) {
+	while (cin.fail() || choose != (int)choose || choose > upper || choose < lower) {
 		cout << "Invalid selection, please try again: ";
 		cin.clear();
 		cin.ignore(std::numeric_limits<streamsize>::max(), '\n');

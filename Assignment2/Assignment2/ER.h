@@ -34,6 +34,7 @@ public:
 	void print_patient();
 	void save_to_file();
 	bool load_file();
+	void load_patients_list();
 	void change_category();
 	void back_home(double &zero);
 	void find_patient(int patient_phn);

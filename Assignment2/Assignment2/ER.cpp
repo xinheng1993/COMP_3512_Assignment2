@@ -573,7 +573,7 @@ void Er::check_input_integer(int lower, int upper, int& value){
 }
 
 void Er::check_phn(int& phn) {
-	while (check_exits(phn)) {
+	while (check_phn_exits(phn)) {
 		print_border(39);
 		cout << "*personal health number already exsits*" << endl;
 		print_border(39);
@@ -583,7 +583,7 @@ void Er::check_phn(int& phn) {
 	}
 }
 
-bool Er::check_exits(int& val) {
+bool Er::check_phn_exits(int& val) {
 	for (auto it = patients.begin(); it != patients.end(); ++it) {
 		if (val == (*it).get_phn())
 			return true;

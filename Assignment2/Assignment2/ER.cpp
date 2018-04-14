@@ -215,7 +215,7 @@ void Er::home_page(){
 	update_queue();
 	double choose;
 	system("cls");
-	cout << "\n----------Queue of patients System----------" << endl;
+	cout << "\n----------Queue of ER patients System----------" << endl;
 	cout << "\t    " << "1.Add new patient" << endl;
 	cout << "\t    " << "2.Get next patient" << endl;
 	cout << "\t    " << "3.Change patient category" << endl;
@@ -442,8 +442,9 @@ void Er::change_category()
 	}
 	else{
 		print_patient();
-		cout << "Please enter the patient's personal health number that "
-			<< "you would like to change." << endl;
+		print_border(83);
+		cout << "*Please enter the patient's personal health number that you would like to change.*" << endl;
+		print_border(83);
 		int phn_to_change;
 		cin >> phn_to_change;
 		check_input_integer(0, 99999999, phn_to_change);	
@@ -523,7 +524,9 @@ void Er::find_patient(int patient_phn)
 {	
 	for (auto it = patients.begin(); it != patients.end(); ++it) {
 		if ((*it).get_phn() == patient_phn) {
-			cout << "Please enter new category number for this patient" << endl;
+			print_border(50);
+			cout << "*Please enter new category number for this patient*" << endl;
+			print_border(50);
 			(*it).set_cate(category_page());
 			sort_patients();
 			retry_home(false);
@@ -531,8 +534,10 @@ void Er::find_patient(int patient_phn)
 		}		
 	}
 	system("cls");
-	cout << "Sorry, the personal health number you entered may not correct. \n"
+	print_border(65);
+	cout << "*Sorry, the personal health number you entered may not correct.* \n"
 		<< "Please try again.\n" << endl;
+	print_border(65);
 	change_category();
 }
 

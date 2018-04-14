@@ -1,7 +1,7 @@
 #pragma once
 #include "Menu.h"
-#include"Category.h"
-#include<vector>
+#include "Category.h"
+#include <vector>
 #include <iostream>
 #include "erPatient.h"
 #include <fstream>

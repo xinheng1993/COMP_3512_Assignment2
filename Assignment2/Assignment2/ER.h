@@ -28,6 +28,19 @@ public:
 	void promo_cate(erPatient& temp);
 	int get_cate_num(string);
 
+	//input function
+	void enter_first_name(string& first);
+	void enter_middle_name(string& middle);
+	void enter_last_name(string& last);
+	void enter_birth_year(int& year);
+	void enter_birth_month(int& month);
+	void enter_birth_days(int& days);
+	void enter_personal_number(int& phn);
+	void initialize_admin_time(int& hour, int& minute);
+	void enter_symptoms(string& symptoms);
+	void choose_category(string& category);
+	
+
 	void add_patients();
 	void sort_patients();
 	void get_next_patient();

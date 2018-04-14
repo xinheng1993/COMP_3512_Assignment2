@@ -1,12 +1,14 @@
 #pragma once
-#include <iostream>
-#include "Category.h"
-#include "Patient.h"
-#include <thread>
 #include <chrono>
+#include "Category.h"
 #include <iomanip>
+#include <iostream>
+#include "Patient.h"
 #include <string>
+#include <thread>
+
 using namespace std;
+
 class menu {
 public:
 	virtual void retry_home(bool is_error) = 0;

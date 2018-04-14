@@ -26,20 +26,24 @@ public:
 		display_min = other.display_min;
 	};
 	~erPatient() {};
+
 	int get_hour() const {return admin_hour;}
 	void set_hour(int new_hour) { admin_hour = new_hour; }
+
 	int get_minute() const {return admin_minute;}
 	void set_minute(int new_min) { admin_minute = new_min; }
+
 	int get_display_hour() const { return display_hour; }
 	void set_display_hour(int dis_hour) { display_hour = display_hour; }
+
 	int get_display_minute() const { return display_min; }
 	void set_display_minute(int dis_min) { display_min = dis_min; }
+
+	void set_cate(string cate) { category = cate; }
 	string get_category() const {return category;}
+	
 	Date& get_adminDate() {return adminDate;}
-	void set_cate(string cate){category = cate;}
-	void set_adminDate(int& year, int& mon, int& day) {
-		adminDate.set_date(year, mon, day);
-	}
+	void set_adminDate(int& year, int& mon, int& day) { adminDate.set_date(year, mon, day);}
 
 	virtual void print() const {
 		patient::print();

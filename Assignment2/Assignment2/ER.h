@@ -1,16 +1,17 @@
 #pragma once
-#include "Menu.h"
+#include <algorithm>
 #include "Category.h"
-#include <vector>
-#include <iostream>
 #include "erPatient.h"
 #include <fstream>
+#include <iostream>
+#include "Menu.h"
+#include <queue>
 #include <string>
 #include <sstream>
-#include <algorithm>
-#include <queue>
+#include <vector>
+
 using namespace std;
-class menu;
+
 class Er : public menu{
 	deque<erPatient> patients;
 	Category s;

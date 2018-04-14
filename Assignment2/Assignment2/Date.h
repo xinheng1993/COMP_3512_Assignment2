@@ -41,8 +41,5 @@ public:
 	friend bool operator>(const Date& lhs, const Date& rhs);
 	friend bool operator>=(const Date& lhs, const Date& rhs);
 	friend bool operator<=(const Date& lhs, const Date& rhs);
-	//Date& operator=(Date& rhs);
-	//friend void swap(Date& first, Date& second);
-	//friend bool compare(const Date lhs, const Date rhs);
 };
 

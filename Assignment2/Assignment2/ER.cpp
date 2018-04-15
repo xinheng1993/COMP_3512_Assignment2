@@ -1,8 +1,10 @@
 #include "ER.h"
-#define LINE_OFFSET 10
-void Er::promotion()
+#define LINE_OFFSET 12
+void Er::update_queue()
 {
-	get_non_critical();
+	if (!patients.empty()) {
+		get_non_critical();
+	}
 }
 
 void Er::get_non_critical() {
@@ -205,6 +207,7 @@ void Er::retry_home(bool is_error){
 }
 
 void Er::home_page(){
+	
 	double choose;
 	system("cls");
 	cout << "\n----------Queue of patients System----------" << endl;
@@ -248,9 +251,6 @@ void Er::home_page(){
 		retry_home(false);
 		break;
 	case 6:
-		if (!patients.empty()) {
-			promotion();
-		}
 		print_patient();
 		back_home(choose);
 		break;
@@ -354,6 +354,10 @@ void Er::save_to_file(){
 			<< (*it).get_adminDate() << "\n"
 			<< setw(2) << setfill('0') << (*it).get_hour() << "\n"
 			<< setw(2) << setfill('0') << (*it).get_minute() << "\n"
+			// write hr and min
+			<< setw(2) << setfill('0') << (*it).get_display_hour() << "\n"
+			<< setw(2) << setfill('0') << (*it).get_display_minute() << "\n"
+			//
 			<< (*it).get_symptoms() << "\n"
 			<< (*it).get_category() << "\n";
 	}
@@ -378,7 +382,7 @@ bool Er::load_file(){
 		int number_of_patients = (int)temp.size() / LINE_OFFSET;
 
 		string first, middle, last, symptoms, category;
-		int year, month, days, phn, hour, minute, ad_year, ad_mon, ad_day;
+		int year, month, days, phn, hour, minute, ad_year, ad_mon, ad_day, dis_hr, dis_min;
 		patients.clear();
 		string date, admin_date;
 		for (int i = 0; i < number_of_patients; ++i) {
@@ -398,10 +402,18 @@ bool Er::load_file(){
 			ad_iss >> ad_day;
 			hour = stoi(temp.at(i * LINE_OFFSET + 6));
 			minute = stoi(temp.at(i * LINE_OFFSET + 7));
-			symptoms = temp.at(i * LINE_OFFSET + 8);
-			category = temp.at(i * LINE_OFFSET + 9);
+			// load display hr and min
+			dis_hr = stoi(temp.at(i * LINE_OFFSET + 8));
+			dis_min = stoi(temp.at(i * LINE_OFFSET + 9));
+			//
+			symptoms = temp.at(i * LINE_OFFSET + 10);
+			category = temp.at(i * LINE_OFFSET + 11);
 			erPatient temp_patient(first, middle, last, year, month, days, phn, hour, minute, symptoms, category);
 			temp_patient.set_adminDate(ad_year, ad_mon, ad_day);
+
+			temp_patient.set_display_hour(dis_hr);
+			temp_patient.set_display_minute(dis_min);
+
 			patients.push_back(temp_patient);
 
 		}
@@ -501,6 +513,7 @@ void Er::back_home(double & zero)
 		cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
 		cin >> zero;
 	}
+	update_queue();
 	home_page();
 }
 

@@ -22,7 +22,7 @@ public:
 	virtual string category_page() override;
 	void system_start() {home_page();}
 	// being call in home page
-	void promotion();
+	void update_queue();
 	void get_non_critical();
 	bool compare_date(Date admin_date, int admin_hr, int admin_min, int promo_min);
 	void promo_cate(erPatient& temp);

@@ -30,6 +30,10 @@ public:
 	void set_hour(int new_hour) { admin_hour = new_hour; }
 	int get_minute() const {return admin_minute;}
 	void set_minute(int new_min) { admin_minute = new_min; }
+	int get_display_hour() const { return display_hour; }
+	void set_display_hour(int dis_hour) { display_hour = display_hour; }
+	int get_display_minute() const { return display_min; }
+	void set_display_minute(int dis_min) { display_min = dis_min; }
 	string get_category() const {return category;}
 	Date& get_adminDate() {return adminDate;}
 	void set_cate(string cate){category = cate;}

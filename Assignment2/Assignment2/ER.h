@@ -62,7 +62,7 @@ public:
 	void check_input_days(int& year, int& month, int& days);
 	void check_input_integer(int lower, int upper, int& value);
 	void check_phn(int& phn);
-	bool check_exits(int& val);
+	bool check_if_phn_exist(int& val);
 	void check_page_choose(double& choose, int upper, int lower);
 	void print_border(int number);
 };

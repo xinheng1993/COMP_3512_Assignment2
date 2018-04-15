@@ -77,7 +77,7 @@ void Er::promo_cate(erPatient& temp) {
 	{
 	case 2:
 		if (compare_date(admin_date,admin_hr,admin_min,60)) {
-			temp.set_cate("Critical, requires care very soon");
+			temp.set_cate(s.categorys[cate_num - 1]);
 			temp.set_adminDate(year, mon, day);
 			temp.set_hour(hour);
 			temp.set_minute(minute);
@@ -86,7 +86,7 @@ void Er::promo_cate(erPatient& temp) {
 		break;
 	case 3:
 		if (compare_date(admin_date, admin_hr, admin_min,120)) {
-			temp.set_cate("Serious, requires care soon");
+			temp.set_cate(s.categorys[cate_num - 1]);
 			temp.set_adminDate(year, mon, day);
 			temp.set_hour(hour);
 			temp.set_minute(minute);
@@ -95,7 +95,7 @@ void Er::promo_cate(erPatient& temp) {
 		break;
 	case 4:
 		if (compare_date(admin_date, admin_hr, admin_min,180)) {
-			temp.set_cate("Serious");
+			temp.set_cate(s.categorys[cate_num - 1]);
 			temp.set_adminDate(year, mon, day);
 			temp.set_hour(hour);
 			temp.set_minute(minute);
@@ -104,7 +104,7 @@ void Er::promo_cate(erPatient& temp) {
 		break;
 	case 5:
 		if (compare_date(admin_date, admin_hr, admin_min,240)) {
-			temp.set_cate("Non - serious");
+			temp.set_cate(s.categorys[cate_num - 1]);
 			temp.set_adminDate(year, mon, day);
 			temp.set_hour(hour);
 			temp.set_minute(minute);

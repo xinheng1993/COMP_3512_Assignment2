@@ -142,6 +142,7 @@ void Er::add_patients() {
 	enter_birth_days(year, month, days);
 	enter_personal_number(phn);
 	initialize_admin_time(hour, minute);
+	enter_symptoms(symptoms);
 	choose_category(category);
 
 	erPatient temp(first, middle, last, year, month, days, phn, hour, minute, symptoms, category);
@@ -502,12 +503,14 @@ bool Er::load_file(){
 			middle = temp.at(i * LINE_OFFSET + 1);
 			last = temp.at(i * LINE_OFFSET + 2);
 			date = temp.at(i * LINE_OFFSET + 3);
+			replace(date.begin(), date.end(), '/', ' ');
 			istringstream iss(date);
 			iss >> year;
 			iss >> month;
 			iss >> days;
 			phn = stoi(temp.at(i * LINE_OFFSET + 4));
 			admin_date = temp.at(i * LINE_OFFSET + 5);
+			replace(admin_date.begin(), admin_date.end(), '/', ' ');
 			istringstream ad_iss(admin_date);
 			ad_iss >> ad_year;
 			ad_iss >> ad_mon;

@@ -4,7 +4,7 @@
 class erPatient:public patient {
 protected:
 	string category;
-	int admin_hour, admin_minute;
+	int admin_hour, admin_minute, display_hour, display_min;
 	Date adminDate = Date::today();
 public:
 	erPatient() {};
@@ -14,16 +14,22 @@ public:
 		admin_hour = _hour;
 		admin_minute = _minute;
 		category = _category;
+		display_hour = _hour;
+		display_min = _minute;
 	};
 	erPatient(const erPatient& other):patient(other) {
 		category = other.category;
 		admin_hour = other.admin_hour;
 		admin_minute = other.admin_minute;
 		adminDate = other.adminDate;
+		display_hour = other.display_hour;
+		display_min = other.display_min;
 	};
 	~erPatient() {};
 	int get_hour() const {return admin_hour;}
+	void set_hour(int new_hour) { admin_hour = new_hour; }
 	int get_minute() const {return admin_minute;}
+	void set_minute(int new_min) { admin_minute = new_min; }
 	string get_category() const {return category;}
 	Date& get_adminDate() {return adminDate;}
 	void set_cate(string cate){category = cate;}
@@ -34,8 +40,8 @@ public:
 	virtual void print() const {
 		patient::print();
 		cout << "   <admin_date>: " << adminDate <<"\n"
-			 << "   <admission time>: " << setw(2) << setfill('0') << admin_hour
-			 << ":" << setw(2) << setfill('0') << admin_minute <<"\n"
+			 << "   <admission time>: " << setw(2) << setfill('0') << display_hour
+			 << ":" << setw(2) << setfill('0') << display_min <<"\n"
 			 << "   <category>: " << category << endl;
 	}
 };

@@ -238,6 +238,11 @@ void Er::print_patient() {
 	}
 }
 
+// return an int corsponding to the category.
+//PRE:    None
+//POST:	  None
+//PARAM:  category's name
+//RETURN: category number as int
 int Er::get_cate_num(string cate_name) {
 	if (cate_name.compare("Serious, requires care soon") == 0) {
 		return 2;
@@ -316,6 +321,12 @@ void Er::choose_category(string & category)
 	category = category_page();
 }
 
+//Sort the patient list base on their catrgory, if category is the same
+//first come first serve.
+//PRE:    patient list cannot be empty
+//POST:	  patient list is sorted
+//PARAM:  None
+//RETURN: None
 void Er::sort_patients() {
 	sort(patients.begin(), patients.end(), [=](erPatient a, erPatient b) {
 		int x, y;
@@ -338,6 +349,11 @@ void Er::sort_patients() {
 	});
 }
 
+//find sepecific patient by its personal health number
+//PRE:   None
+//POST:  None
+//PARAM: the patient's personal health number 
+//RETURN: None
 void Er::find_patient(int patient_phn)
 {
 	for (auto it = patients.begin(); it != patients.end(); ++it) {
@@ -359,6 +375,11 @@ void Er::find_patient(int patient_phn)
 	change_category();
 }
 
+//check if patients are qulifiy to promotion their priority
+//PRE:   None
+//POST:  None
+//PARAM: None
+//RETURN: None
 void Er::update_queue()
 {
 	if (!patients.empty()) {
@@ -366,6 +387,11 @@ void Er::update_queue()
 	}
 }
 
+//calculates non critical patients
+//PRE:   None
+//POST:  None
+//PARAM: None 
+//RETURN: None
 void Er::get_non_critical() {
 	// 2. filter list find non critical
 	for (auto it = patients.begin(); it != patients.end(); ++it) {
@@ -375,6 +401,14 @@ void Er::get_non_critical() {
 	}
 }
 
+//compare patient's waiting time
+//PRE:   None
+//POST:  None
+//PARAM: admintion date
+//PARAM: admintion hour
+//PARAM: admintion minute
+//PARAM: promotion rule in minute
+//RETURN: None
 bool Er::compare_date(Date admin_date, int admin_hr, int admin_min, int promo_min) {
 	//4. compare date
 	int admin_year = admin_date.get_year();
@@ -436,43 +470,62 @@ void Er::promo_cate(erPatient& temp) {
 	{
 	case 2:
 		if (compare_date(admin_date,admin_hr,admin_min,60)) {
+			//1hr
 			temp.set_cate(s.categorys[cate_num - 1]);
-			temp.set_adminDate(year, mon, day);
-			temp.set_hour(hour);
-			temp.set_minute(minute);
 			break;
 		}
-		break;
 	case 3:
-		if (compare_date(admin_date, admin_hr, admin_min,120)) {
-			temp.set_cate(s.categorys[cate_num - 1]);
-			temp.set_adminDate(year, mon, day);
-			temp.set_hour(hour);
-			temp.set_minute(minute);
+		if (compare_date(admin_date, admin_hr, admin_min, 180)) {
+			//3hr
+			temp.set_cate(s.categorys[cate_num - 2]);
 			break;
 		}
-		break;
+		else if (compare_date(admin_date, admin_hr, admin_min, 120)) {
+			// 2hrs
+			temp.set_cate(s.categorys[cate_num - 1]);
+			break;
+		}
 	case 4:
-		if (compare_date(admin_date, admin_hr, admin_min,180)) {
-			temp.set_cate(s.categorys[cate_num - 1]);
-			temp.set_adminDate(year, mon, day);
-			temp.set_hour(hour);
-			temp.set_minute(minute);
+		if (compare_date(admin_date, admin_hr, admin_min,360)) {
+			// 6 hr
+			temp.set_cate(s.categorys[cate_num - 3]);
 			break;
 		}
-		break;
+		else if (compare_date(admin_date, admin_hr, admin_min, 300)) {
+			// 5hr
+			temp.set_cate(s.categorys[cate_num - 2]);
+			break;
+		}
+		else if (compare_date(admin_date, admin_hr, admin_min, 180)) {
+			// 3hr
+			temp.set_cate(s.categorys[cate_num - 1]);
+			break;
+		}
 	case 5:
-		if (compare_date(admin_date, admin_hr, admin_min,240)) {
-			temp.set_cate(s.categorys[cate_num - 1]);
-			temp.set_adminDate(year, mon, day);
-			temp.set_hour(hour);
-			temp.set_minute(minute);
+		if (compare_date(admin_date, admin_hr, admin_min, 600)) {
+			// 10 hr
+			temp.set_cate(s.categorys[cate_num - 4]);
 			break;
 		}
-		break;
-	default:
-		break;
+		else if (compare_date(admin_date, admin_hr, admin_min, 540)) {
+			// 9hr
+			temp.set_cate(s.categorys[cate_num - 3]);
+			break;
+		}
+		else if (compare_date(admin_date, admin_hr, admin_min, 420)) {
+			// 7 hr
+			temp.set_cate(s.categorys[cate_num - 2]);
+			break;
+		}
+		else if (compare_date(admin_date, admin_hr, admin_min, 240)) {
+			// category 5, 4hr
+			temp.set_cate(s.categorys[cate_num - 1]);
+			break;
+		}
 	}
+	temp.set_adminDate(year, mon, day);
+	temp.set_hour(hour);
+	temp.set_minute(minute);
 	
 }
 

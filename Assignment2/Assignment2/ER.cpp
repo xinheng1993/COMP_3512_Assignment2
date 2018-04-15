@@ -155,6 +155,11 @@ void Er::add_patients() {
 	retry_home(false);
 }
 
+// prints next patient in the queue and remove it.
+//PRE:	  patient list must not empty
+//POST:   the next patient must be removed from the list.
+//PARAM:  None.
+//RETURN: None.
 void Er::get_next_patient() {
 	if (!patients.empty()) {
 		patients.front().print();
@@ -402,14 +407,13 @@ void Er::get_non_critical() {
 	}
 }
 
-//compare patient's waiting time
+//calculate patient's waiting time
 //PRE:   None
 //POST:  None
 //PARAM: admintion date
 //PARAM: admintion hour
 //PARAM: admintion minute
-//PARAM: promotion rule in minute
-//RETURN: None
+//RETURN:time differnce in minutes
 int Er::compare_date(Date admin_date, int admin_hr, int admin_min) {
 	//4. compare date
 	int admin_year = admin_date.get_year();
@@ -451,7 +455,10 @@ int Er::compare_date(Date admin_date, int admin_hr, int admin_min) {
 }
 
 //promote patient's category, if they meet criteria.
-//PRE:
+//PRE:   patient must not in critical category
+//POST:	 None
+//PARAM: a ref of non critical patient
+//RETURN:None
 void Er::promo_cate(erPatient& temp) {
 	//3. find sepecific 
 	//get sepecific promotion rule
@@ -630,6 +637,12 @@ void Er::check_input_integer(int lower, int upper, int& value){
 	cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
 }
 
+//check if personal health number is already in use.
+// if it's in use then ask for enter again.
+//PRE:   None
+//POST:  None
+//PARAM: personal health number
+//RETURN: None
 void Er::check_phn(int& phn) {
 	while (check_if_phn_exist(phn)) {
 		print_border(39);
@@ -641,6 +654,12 @@ void Er::check_phn(int& phn) {
 	}
 }
 
+// check if personal health number is already in use.
+// if it's in use then ask for enter again.
+//PRE:   None
+//POST:  None
+//PARAM: personal health number
+//RETURN: true if the phn is already in use, otherwise, return false.
 bool Er::check_if_phn_exist(int& val) {
 	for (auto it = patients.begin(); it != patients.end(); ++it) {
 		if (val == (*it).get_phn())

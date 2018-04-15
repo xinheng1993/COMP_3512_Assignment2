@@ -207,7 +207,7 @@ void Er::retry_home(bool is_error){
 }
 
 void Er::home_page(){
-	
+	update_queue();
 	double choose;
 	system("cls");
 	cout << "\n----------Queue of patients System----------" << endl;
@@ -439,12 +439,6 @@ void Er::change_category()
 		cin >> phn_to_change;
 		check_input_integer(0, 99999999, phn_to_change);	
 		find_patient(phn_to_change);
-
-		cout << "Please enter new category number for this patient" << endl;
-		
-		find_patient(phn_to_change).set_cate(category_page());
-		sort_patients();
-		retry_home(false);
 	}
 }
 
@@ -513,15 +507,18 @@ void Er::back_home(double & zero)
 		cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
 		cin >> zero;
 	}
-	update_queue();
 	home_page();
 }
 
-erPatient& Er::find_patient(int patient_phn)
+void Er::find_patient(int patient_phn)
 {	
 	for (auto it = patients.begin(); it != patients.end(); ++it) {
 		if ((*it).get_phn() == patient_phn) {
-			return (*it);
+			cout << "Please enter new category number for this patient" << endl;
+			(*it).set_cate(category_page());
+			sort_patients();
+			retry_home(false);
+			return;
 		}		
 	}
 	system("cls");

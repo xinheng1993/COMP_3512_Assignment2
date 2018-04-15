@@ -410,7 +410,7 @@ void Er::get_non_critical() {
 //PARAM: admintion minute
 //PARAM: promotion rule in minute
 //RETURN: None
-bool Er::compare_date(Date admin_date, int admin_hr, int admin_min, int promo_min) {
+int Er::compare_date(Date admin_date, int admin_hr, int admin_min) {
 	//4. compare date
 	int admin_year = admin_date.get_year();
 	int admin_mon = admin_date.get_month();
@@ -429,27 +429,29 @@ bool Er::compare_date(Date admin_date, int admin_hr, int admin_min, int promo_mi
 	if (admin_year == year) {
 		if (admin_mon == mon) {
 			if (admin_day == day) {
-				return (total_min - total_admin >= promo_min) ? true : false;				
+				return total_min - total_admin;				
 			}
 			else { // diff day
 				int diff_day = day - admin_day;
 				total_min += 24 * diff_day * 60;
-				return (total_min - total_admin >= promo_min) ? true : false;			
+				return total_min - total_admin;			
 			}
 		}
 		else { //diff month
 			total_min += mon * 24 * 60;
 			total_admin += admin_mon * 24 * 60;
-			return (total_min - total_admin >= promo_min) ? true : false;
+			return total_min - total_admin;
 		}
 	}
 	else {
 		total_min += year * 24 * 60;
 		total_admin += admin_year * 24 * 60;
-		return (total_min - total_admin >= promo_min) ? true : false;
+		return total_min - total_admin;
 	}
 }
 
+//promote patient's category, if they meet criteria.
+//PRE:
 void Er::promo_cate(erPatient& temp) {
 	//3. find sepecific 
 	//get sepecific promotion rule
@@ -466,60 +468,60 @@ void Er::promo_cate(erPatient& temp) {
 	int year = ltm->tm_year + 1900;
 	int mon = ltm->tm_mon + 1;
 	int day = ltm->tm_mday;
-
+	int diff = compare_date(admin_date, admin_hr, admin_min);
 	switch (cate_num)
 	{
 	case 2:
-		if (compare_date(admin_date,admin_hr,admin_min,60)) {
+		if (diff >= 60) {
 			//1hr
 			temp.set_cate(s.categorys[cate_num - 1]);
 			break;
 		}
 	case 3:
-		if (compare_date(admin_date, admin_hr, admin_min, 180)) {
+		if (diff >= 180) {
 			//3hr
 			temp.set_cate(s.categorys[cate_num - 2]);
 			break;
 		}
-		else if (compare_date(admin_date, admin_hr, admin_min, 120)) {
+		else if (diff >= 120) {
 			// 2hrs
 			temp.set_cate(s.categorys[cate_num - 1]);
 			break;
 		}
 	case 4:
-		if (compare_date(admin_date, admin_hr, admin_min,360)) {
+		if (diff >= 360) {
 			// 6 hr
 			temp.set_cate(s.categorys[cate_num - 3]);
 			break;
 		}
-		else if (compare_date(admin_date, admin_hr, admin_min, 300)) {
+		else if (diff >= 300) {
 			// 5hr
 			temp.set_cate(s.categorys[cate_num - 2]);
 			break;
 		}
-		else if (compare_date(admin_date, admin_hr, admin_min, 180)) {
+		else if (diff >= 180) {
 			// 3hr
 			temp.set_cate(s.categorys[cate_num - 1]);
 			break;
 		}
 	case 5:
-		if (compare_date(admin_date, admin_hr, admin_min, 600)) {
+		if (diff >= 600) {
 			// 10 hr
 			temp.set_cate(s.categorys[cate_num - 4]);
 			break;
 		}
-		else if (compare_date(admin_date, admin_hr, admin_min, 540)) {
+		else if (diff >= 540) {
 			// 9hr
 			temp.set_cate(s.categorys[cate_num - 3]);
 			break;
 		}
-		else if (compare_date(admin_date, admin_hr, admin_min, 420)) {
+		else if (diff >= 420) {
 			// 7 hr
 			temp.set_cate(s.categorys[cate_num - 2]);
 			break;
 		}
-		else if (compare_date(admin_date, admin_hr, admin_min, 240)) {
-			// category 5, 4hr
+		else if (diff >= 240) {
+			// category 5, 4hr 
 			temp.set_cate(s.categorys[cate_num - 1]);
 			break;
 		}

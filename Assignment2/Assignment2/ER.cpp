@@ -23,7 +23,7 @@ void Er::home_page() {
 	cout << "Seletc: ";
 	cin >> choose;
 	check_page_choose(choose, 6, 0);
-	switch (static_cast<int>(choose)) {
+	switch ((int)(choose)) {
 	case 1:
 		add_patients();
 		break;

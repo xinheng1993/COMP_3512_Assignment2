@@ -513,33 +513,33 @@ int Er::compare_date(Date admin_date, int admin_hr, int admin_min) {
 	// set time now
 	time_t now = time(0);
 	tm *ltm = localtime(&now);
-	int hour = ltm->tm_hour;
-	int minute = ltm->tm_min;
-	int year = ltm->tm_year + 1900;
-	int mon = ltm->tm_mon + 1;
-	int day = ltm->tm_mday;
+	int current_hour = ltm->tm_hour;
+	int current_minute = ltm->tm_min;
+	int current_year = ltm->tm_year + 1900;
+	int current_mon = ltm->tm_mon + 1;
+	int current_day = ltm->tm_mday;
 	// total time in minutes
 	int total_admin = admin_hr * 60 + admin_min;
-	int total_min = hour * 60 + minute;
-	if (admin_year == year) {
-		if (admin_mon == mon) {
-			if (admin_day == day) {
+	int total_min = current_hour * 60 + current_minute;
+	if (admin_year == current_year) {
+		if (admin_mon == current_mon) {
+			if (admin_day == current_day) {
 				return total_min - total_admin;				
 			}
 			else { // diff day
-				int diff_day = day - admin_day;
+				int diff_day = current_day - admin_day;
 				total_min += 24 * diff_day * 60;
 				return total_min - total_admin;			
 			}
 		}
 		else { //diff month
-			total_min += mon * 24 * 60;
+			total_min += current_mon * 24 * 60;
 			total_admin += admin_mon * 24 * 60;
 			return total_min - total_admin;
 		}
 	}
 	else {
-		total_min += year * 24 * 60;
+		total_min += current_year * 24 * 60;
 		total_admin += admin_year * 24 * 60;
 		return total_min - total_admin;
 	}

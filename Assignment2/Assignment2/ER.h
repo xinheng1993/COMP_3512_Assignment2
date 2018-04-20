@@ -37,8 +37,8 @@ public:
 	void enter_first_name(string& first);
 	void enter_middle_name(string& middle);
 	void enter_last_name(string& last);
-	void enter_birth_days(int& year, int& month, int & days);
-	void enter_personal_number(int& phn);
+	void enter_birth_date(int& year, int& month, int & days);
+	void enter_personal_health_number(int& phn);
 	void initialize_admin_time(int& hour, int& minute);
 	void enter_symptoms(string& symptoms);
 	void choose_category(string& category);

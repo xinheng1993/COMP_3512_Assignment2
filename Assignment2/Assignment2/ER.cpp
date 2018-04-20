@@ -7,6 +7,17 @@
 #define NON_LEAP_YEAR_FEB 28
 #define FIRST_DAY 1
 
+//home page of the Er system which has 6 options:
+//selection 1: add new patient
+//selection 2: get next patient
+//selection 3: change patient
+//selection 4: save patient list
+//selection 5: load patient list
+//selection 6: print patient list
+//selection 0: exit system (will not save the file)
+//pre:
+//post:
+//return:
 void Er::home_page() {
 	update_queue();
 	double choose;
@@ -55,6 +66,12 @@ void Er::home_page() {
 	}
 }
 
+//category page of the Er system which has 6 options:
+//when ask for a patient's category
+//need to choose the category
+//pre:
+//post:
+//return:
 string Er::category_page() {
 	double choose;
 	//system("cls");
@@ -97,6 +114,12 @@ string Er::category_page() {
 	}
 }
 
+//reopen the hopage after 3 second when too much invalid input
+//reflash current screen
+//pre:
+//post:
+//param is_error: to determin if is caused by invalid input
+//return:
 void Er::retry_home(bool is_error) {
 	cin.clear();
 	cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
@@ -115,6 +138,12 @@ void Er::retry_home(bool is_error) {
 	home_page();
 }
 
+//go back to home page when some operation finished
+//need to enter 0 to back to home
+//pre:
+//post:
+//param: zero to check whether the user enter a 0 or not
+//return:
 void Er::back_home(double & zero)
 {
 	print_border(28);
@@ -132,6 +161,12 @@ void Er::back_home(double & zero)
 	home_page();
 }
 
+//add new patient to the list and sort by category from 0 ~ 5
+//if same category sort by admin time
+//pre:
+//post:
+//param:
+//return:
 void Er::add_patients() {
 	string first, middle, last, symptoms, category;
 	int year, month, days, phn, hour, minute;
@@ -139,8 +174,8 @@ void Er::add_patients() {
 	enter_first_name(first);
 	enter_middle_name(middle);
 	enter_last_name(last);
-	enter_birth_days(year, month, days);
-	enter_personal_number(phn);
+	enter_birth_date(year, month, days);
+	enter_personal_health_number(phn);
 	initialize_admin_time(hour, minute);
 	enter_symptoms(symptoms);
 	choose_category(category);
@@ -194,6 +229,12 @@ void Er::change_category()
 	}
 }
 
+//save patients list to patients.txt file
+//save patients' info and status line by line
+//PRE:	  
+//POST:   patients' status saved in patients file with 12 lines / patient
+//PARAM:  None.
+//RETURN: None.
 void Er::save_to_file() {
 	ofstream fout("patients.txt");
 	for (auto it = patients.begin(); it != patients.end(); ++it) {
@@ -215,6 +256,11 @@ void Er::save_to_file() {
 	fout.close();
 }
 
+// load the file
+//PRE:	  
+//POST:   all the patients are copied to current list
+//PARAM:  None.
+//RETURN: None.
 void Er::load_patients_list() {
 	if (load_file()) {
 		print_border(13);
@@ -228,6 +274,11 @@ void Er::load_patients_list() {
 	}
 }
 
+// prints all patients in the queue.
+//PRE:	  patient list must not empty
+//POST:   
+//PARAM:  None.
+//RETURN: None.
 void Er::print_patient() {
 	if (patients.empty()) {
 		print_border(23);
@@ -264,6 +315,11 @@ int Er::get_cate_num(string cate_name) {
 	}
 }
 
+// ask user to enter patient first name
+//PRE:	  
+//POST:   
+//PARAM:  None.
+//RETURN: None.
 void Er::enter_first_name(string & first)
 {
 	cout << "first name: ";
@@ -271,19 +327,34 @@ void Er::enter_first_name(string & first)
 	getline(cin, first);
 }
 
+// ask user to enter patient middle name
+//PRE:	  
+//POST:   
+//PARAM:  None.
+//RETURN: None.
 void Er::enter_middle_name(string & middle)
 {
 	cout << "middle name (No middle name press Enter): ";
 	getline(cin, middle);
 }
 
+// ask user to enter patient last name
+//PRE:	  
+//POST:   
+//PARAM:  None.
+//RETURN: None.
 void Er::enter_last_name(string & last)
 {
 	cout << "last name: ";
 	getline(cin, last);
 }
 
-void Er::enter_birth_days(int& year, int& month, int & days)
+// ask user to enter patient birth date
+//PRE:	  
+//POST:   
+//PARAM:  None.
+//RETURN: None.
+void Er::enter_birth_date(int& year, int& month, int & days)
 {
 	cout << "birth of the year: ";
 	cin >> year;
@@ -298,7 +369,12 @@ void Er::enter_birth_days(int& year, int& month, int & days)
 	check_input_days(year, month, days);
 }
 
-void Er::enter_personal_number(int & phn)
+// ask user to enter patient personal health number
+//PRE:	  
+//POST:   
+//PARAM:  None.
+//RETURN: None.
+void Er::enter_personal_health_number(int & phn)
 {
 	cout << "personal healthcare number: ";
 	cin >> phn;
@@ -306,6 +382,11 @@ void Er::enter_personal_number(int & phn)
 	check_phn(phn);
 }
 
+// initialize admin time with current local time
+//PRE:	  
+//POST:   
+//PARAM:  None.
+//RETURN: None.
 void Er::initialize_admin_time(int & hour, int & minute)
 {
 	time_t now = time(0);
@@ -316,12 +397,22 @@ void Er::initialize_admin_time(int & hour, int & minute)
 	cout << "[" << setw(2) << setfill('0') << hour << ":" << setw(2) << setfill('0') << minute << "]" << "\n";
 }
 
+// ask user to enter patient's symptoms
+//PRE:	  
+//POST:   
+//PARAM:  None.
+//RETURN: None.
 void Er::enter_symptoms(string & symptoms)
 {
 	cout << "symptoms: ";
 	getline(cin, symptoms);
 }
 
+// ask user to choose patient's symptoms
+//PRE:	  
+//POST:   call category_page() to make a choice
+//PARAM:  None.
+//RETURN: None.
 void Er::choose_category(string & category)
 {
 	category = category_page();
@@ -539,6 +630,11 @@ void Er::promo_cate(erPatient& temp) {
 	
 }
 
+// load patients list to current list and replace it 
+//PRE:	  
+//POST:   call category_page() to make a choice
+//PARAM:  None.
+//RETURN: None.
 bool Er::load_file(){
 	ifstream fin("patients.txt");
 	vector<double> data;
@@ -599,6 +695,11 @@ bool Er::load_file(){
 	fin.close();
 }
 
+// check the user input for the date
+//PRE:	  
+//POST:   
+//PARAM:  None.
+//RETURN: None.
 void Er::check_input_days(int & year, int & month, int & days){
 	if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10
 		|| month == 12) {
@@ -627,6 +728,13 @@ void Er::check_input_days(int & year, int & month, int & days){
 	}
 }
 
+// check the user integer input
+//PRE:	  
+//POST:   
+//PARAM:  lower the lower bound of the input range.
+//PARAM:  upper the upper bound of the input range.
+//PARAM:  value the value which need to store the input
+//RETURN: None.
 void Er::check_input_integer(int lower, int upper, int& value){
 	while (cin.fail() || value > upper || value < lower) {
 		cout << "Invalid value please try again: ";
@@ -668,6 +776,13 @@ bool Er::check_if_phn_exist(int& val) {
 	return false;
 }
 
+// check the user choic for each page
+//PRE:	  
+//POST:   
+//PARAM:  lower the lower bound of the input range.
+//PARAM:  upper the upper bound of the input range.
+//PARAM:  choose the choic which user made
+//RETURN: None.
 void Er::check_page_choose(double& choose, int upper,int lower) {
 	while (cin.fail() || choose != (int)choose || choose > upper || choose < lower) {
 		cout << "Invalid selection, please try again: ";
@@ -677,6 +792,11 @@ void Er::check_page_choose(double& choose, int upper,int lower) {
 	}
 }
 
+// print border for each message the system output
+//PRE:	  
+//POST:   
+//PARAM: 
+//RETURN: None.
 void Er::print_border(int number){
 	cout << setw(number) << setfill('*') << "" << endl;
 }

@@ -1,7 +1,7 @@
 #include "ER.h"
 
 #define BIG_MONTH_DAY 31
-#define LINE_OFFSET 12
+#define LINE_OFFSET 13
 #define SMALL_MONTH_DAY 30
 #define LEAP_YEAR_FEB 29
 #define NON_LEAP_YEAR_FEB 28
@@ -233,7 +233,7 @@ void Er::change_category()
 //save patients list to patients.txt file
 //save patients' info and status line by line
 //PRE:	  
-//POST:   patients' status saved in patients file with 12 lines / patient
+//POST:   patients' status saved in patients file with 13 lines / patient
 //PARAM:  None.
 //RETURN: None.
 void Er::save_to_file() {
@@ -242,14 +242,21 @@ void Er::save_to_file() {
 		fout << (*it).get_first() << "\n"
 			<< (*it).get_middle() << "\n"
 			<< (*it).get_last() << "\n"
+
 			<< (*it).get_birthday() << "\n"
+
 			<< setw(8) << setfill('0') << (*it).get_phn() << "\n"
+
 			<< (*it).get_adminDate() << "\n"
-			<< setw(2) << setfill('0') << (*it).get_hour() << "\n"
-			<< setw(2) << setfill('0') << (*it).get_minute() << "\n"
-			// write hr and min
+			// write hr and min(no change)
 			<< setw(2) << setfill('0') << (*it).get_display_hour() << "\n"
 			<< setw(2) << setfill('0') << (*it).get_display_minute() << "\n"
+
+			<< (*it).get_updated_adminDate() << "\n"
+			//  hr and min(need to change)
+			<< setw(2) << setfill('0') << (*it).get_hour() << "\n"
+			<< setw(2) << setfill('0') << (*it).get_minute() << "\n"
+			
 			//
 			<< (*it).get_symptoms() << "\n"
 			<< (*it).get_category() << "\n";
@@ -539,24 +546,24 @@ int Er::compare_date(Date admin_date, int admin_hr, int admin_min) {
 	//if (admin_year == current_year) {
 	//	if (admin_mon == current_mon) {
 	//		if (admin_day == current_day) {
-	//			return total_current_min - total_admin;
+	//			return total_current_min - total_admin_min;
 	//		}
 	//		else { // diff day
 	//			int diff_day = current_day - admin_day;
 	//			total_current_min += 24 * diff_day * 60;
-	//			return total_current_min - total_admin;
+	//			return total_current_min - total_admin_min;
 	//		}
 	//	}
 	//	else { //diff month
 	//		total_current_min += current_mon * 24 * 60;
-	//		total_admin += admin_mon * 24 * 60;
-	//		return total_current_min - total_admin;
+	//		total_admin_min += admin_mon * 24 * 60;
+	//		return total_current_min - total_admin_min;
 	//	}
 	//}
 	//else {
 	//	total_current_min += current_year * 24 * 60;
-	//	total_admin += admin_year * 24 * 60;
-	//	return total_current_min - total_admin;
+	//	total_admin_min += admin_year * 24 * 60;
+	//	return total_current_min - total_admin_min;
 	//}
 }
 
@@ -569,7 +576,7 @@ void Er::promo_cate(erPatient& temp) {
 	//3. find sepecific 
 	//get sepecific promotion rule
 	int cate_num = get_cate_num(temp.get_category());
-	Date admin_date = temp.get_adminDate();
+	Date updated_adminDate = temp.get_updated_adminDate();
 	int admin_hr = temp.get_hour();
 	int admin_min = temp.get_minute();
 	// update admin time
@@ -581,7 +588,7 @@ void Er::promo_cate(erPatient& temp) {
 	int year = ltm->tm_year + 1900;
 	int mon = ltm->tm_mon + 1;
 	int day = ltm->tm_mday;
-	int diff = compare_date(admin_date, admin_hr, admin_min);
+	int diff = compare_date(updated_adminDate, admin_hr, admin_min);
 	switch (cate_num)
 	{
 	case 2:
@@ -639,7 +646,7 @@ void Er::promo_cate(erPatient& temp) {
 			break;
 		}
 	}
-	temp.set_adminDate(year, mon, day);
+	temp.set_updated_adminDate(year, mon, day);
 	temp.set_hour(hour);
 	temp.set_minute(minute);
 	
@@ -668,34 +675,46 @@ bool Er::load_file(){
 		int number_of_patients = (int)temp.size() / LINE_OFFSET;
 
 		string first, middle, last, symptoms, category;
-		int year, month, days, phn, hour, minute, ad_year, ad_mon, ad_day, dis_hr, dis_min;
+		int year, month, days, phn,
+			ad_year, ad_mon, ad_day, dis_hr, dis_min,
+			updated_ad_year, updated_ad_mon, updated_ad_day, hour, minute;
 		patients.clear();
-		string date, admin_date;
+		string date, admin_date, updated_admin_date;
 		for (int i = 0; i < number_of_patients; ++i) {
 			first = temp.at(i * LINE_OFFSET + 0);
 			middle = temp.at(i * LINE_OFFSET + 1);
 			last = temp.at(i * LINE_OFFSET + 2);
+
 			date = temp.at(i * LINE_OFFSET + 3);
 			replace(date.begin(), date.end(), '/', ' ');
 			istringstream iss(date);
 			iss >> year;
 			iss >> month;
 			iss >> days;
+
 			phn = stoi(temp.at(i * LINE_OFFSET + 4));
+
 			admin_date = temp.at(i * LINE_OFFSET + 5);
 			replace(admin_date.begin(), admin_date.end(), '/', ' ');
 			istringstream ad_iss(admin_date);
 			ad_iss >> ad_year;
 			ad_iss >> ad_mon;
 			ad_iss >> ad_day;
-			hour = stoi(temp.at(i * LINE_OFFSET + 6));
-			minute = stoi(temp.at(i * LINE_OFFSET + 7));
 			// load display hr and min
-			dis_hr = stoi(temp.at(i * LINE_OFFSET + 8));
-			dis_min = stoi(temp.at(i * LINE_OFFSET + 9));
-			//
-			symptoms = temp.at(i * LINE_OFFSET + 10);
-			category = temp.at(i * LINE_OFFSET + 11);
+			dis_hr = stoi(temp.at(i * LINE_OFFSET + 6));
+			dis_min = stoi(temp.at(i * LINE_OFFSET + 7));
+
+			updated_admin_date = temp.at(i * LINE_OFFSET + 8);
+			replace(updated_admin_date.begin(), updated_admin_date.end(), '/', ' ');
+			istringstream update_ad_iss(updated_admin_date);
+			update_ad_iss >> updated_ad_year;
+			update_ad_iss >> updated_ad_mon;
+			update_ad_iss >> updated_ad_day;
+			hour = stoi(temp.at(i * LINE_OFFSET + 9));
+			minute = stoi(temp.at(i * LINE_OFFSET + 10));
+			
+			symptoms = temp.at(i * LINE_OFFSET + 11);
+			category = temp.at(i * LINE_OFFSET + 12);
 			erPatient temp_patient(first, middle, last, year, month, days, phn, hour, minute, symptoms, category);
 			temp_patient.set_adminDate(ad_year, ad_mon, ad_day);
 

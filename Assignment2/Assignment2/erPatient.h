@@ -6,6 +6,7 @@ protected:
 	string category;
 	int admin_hour, admin_minute, display_hour, display_min;
 	Date adminDate = Date::today();
+	Date updated_adminDate = Date::today();
 public:
 	erPatient() {};
 	erPatient(string _first, string _middle, string _last,int _year, int _month, int _day, int _phn, 
@@ -22,6 +23,7 @@ public:
 		admin_hour = other.admin_hour;
 		admin_minute = other.admin_minute;
 		adminDate = other.adminDate;
+		updated_adminDate = other.updated_adminDate;
 		display_hour = other.display_hour;
 		display_min = other.display_min;
 	};
@@ -44,6 +46,9 @@ public:
 	
 	Date& get_adminDate() {return adminDate;}
 	void set_adminDate(int& year, int& mon, int& day) { adminDate.set_date(year, mon, day);}
+
+	Date& get_updated_adminDate() { return updated_adminDate; }
+	void set_updated_adminDate(int& year, int& mon, int& day) { updated_adminDate.set_date(year, mon, day); }
 
 	virtual void print() const {
 		patient::print();

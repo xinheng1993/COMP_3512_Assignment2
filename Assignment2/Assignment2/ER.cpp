@@ -508,9 +508,9 @@ void Er::get_non_critical() {
 //RETURN:time differnce in minutes
 int Er::compare_date(Date admin_date, int admin_hr, int admin_min) {
 	//4. compare date
-	int admin_year = admin_date.get_year();
-	int admin_mon = admin_date.get_month();
-	int admin_day = admin_date.get_day();
+	//int admin_year = admin_date.get_year();
+	//int admin_mon = admin_date.get_month();
+	//int admin_day = admin_date.get_day();
 	// set time now
 	time_t now = time(0);
 	tm *ltm = localtime(&now);

@@ -36,7 +36,7 @@ public:
 	void set_minute(int new_min) { admin_minute = new_min; }
 
 	int get_display_hour() const { return display_hour; }
-	void set_display_hour(int dis_hour) { display_hour = display_hour; }
+	void set_display_hour(int dis_hour) { display_hour = dis_hour; }
 
 	int get_display_minute() const { return display_min; }
 	void set_display_minute(int dis_min) { display_min = dis_min; }

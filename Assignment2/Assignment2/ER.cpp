@@ -513,7 +513,7 @@ void Er::get_non_critical() {
 //PARAM: admintion hour
 //PARAM: admintion minute
 //RETURN:time differnce in minutes
-int Er::compare_date(Date admin_date, int admin_hr, int admin_min) {
+int Er::compare_date(Date& updated_admin_date, int admin_hr, int admin_min) {
 	//4. compare date
 	//int admin_year = admin_date.get_year();
 	//int admin_mon = admin_date.get_month();
@@ -531,13 +531,13 @@ int Er::compare_date(Date admin_date, int admin_hr, int admin_min) {
 	int total_admin_min = admin_hr * 60 + admin_min;
 	int total_current_min = current_hour * 60 + current_minute;
 
-	if (admin_date == current_date) {
+	if (updated_admin_date == current_date) {
 		return total_current_min - total_admin_min;
 	}
 	else {
 		int days_passed{ 0 };
-		while (admin_date != current_date) {
-			++admin_date;
+		while (updated_admin_date != current_date) {
+			++updated_admin_date;
 			++days_passed;
 		}
 		int minutes_passed = days_passed * TOTAL_MINUTES_PER_DAY;
@@ -585,9 +585,9 @@ void Er::promo_cate(erPatient& temp) {
 	tm *ltm = localtime(&now);
 	int hour = ltm->tm_hour;
 	int minute = ltm->tm_min;
-	int year = ltm->tm_year + 1900;
-	int mon = ltm->tm_mon + 1;
-	int day = ltm->tm_mday;
+	//int year = ltm->tm_year + 1900;
+	//int mon = ltm->tm_mon + 1;
+	//int day = ltm->tm_mday;
 	int diff = compare_date(updated_adminDate, admin_hr, admin_min);
 	switch (cate_num)
 	{
@@ -646,7 +646,7 @@ void Er::promo_cate(erPatient& temp) {
 			break;
 		}
 	}
-	temp.set_updated_adminDate(year, mon, day);
+	//temp.set_updated_adminDate(year, mon, day);
 	temp.set_hour(hour);
 	temp.set_minute(minute);
 	

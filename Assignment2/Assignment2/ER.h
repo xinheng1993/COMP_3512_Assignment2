@@ -51,7 +51,7 @@ public:
 	void update_queue();
 	void get_non_critical();
 	int get_cate_num(string);
-	int compare_date(Date admin_date, int admin_hr, int admin_min);
+	int compare_date(Date& updated_admin_date, int admin_hr, int admin_min);
 	void promo_cate(erPatient& temp);
 	
 	//load patients list

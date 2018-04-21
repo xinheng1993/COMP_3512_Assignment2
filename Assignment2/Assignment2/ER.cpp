@@ -209,6 +209,11 @@ void Er::get_next_patient() {
 
 }
 
+// changes patients category
+//PRE:    patients list must exsits
+//POST:   patient catory must changed.
+//PARAM:  NONE.
+//RETURN: NONE.
 void Er::change_category()
 {
 	if (patients.empty()) {

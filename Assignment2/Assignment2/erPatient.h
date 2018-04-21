@@ -8,6 +8,7 @@ protected:
 	Date adminDate = Date::today();
 	Date updated_adminDate = Date::today();
 public:
+	// default constructor
 	erPatient() {};
 	erPatient(string _first, string _middle, string _last,int _year, int _month, int _day, int _phn, 
 		int _hour, int _minute,string _symptoms,string _category):patient(_first, _middle, _last, _year,
@@ -18,6 +19,7 @@ public:
 		display_hour = _hour;
 		display_min = _minute;
 	};
+	//copy constructor
 	erPatient(const erPatient& other):patient(other) {
 		category = other.category;
 		admin_hour = other.admin_hour;
@@ -27,8 +29,10 @@ public:
 		display_hour = other.display_hour;
 		display_min = other.display_min;
 	};
+	//destructor
 	~erPatient() {};
 
+	//getters and setters
 	int get_hour() const {return admin_hour;}
 	void set_hour(int new_hour) { admin_hour = new_hour; }
 
@@ -50,6 +54,7 @@ public:
 	Date& get_updated_adminDate() { return updated_adminDate; }
 	void set_updated_adminDate(int& year, int& mon, int& day) { updated_adminDate.set_date(year, mon, day); }
 
+	//print patient.
 	virtual void print() const {
 		patient::print();
 		cout << "   <admin_date>: " << adminDate <<"\n"

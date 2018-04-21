@@ -6,6 +6,7 @@
 #define LEAP_YEAR_FEB 29
 #define NON_LEAP_YEAR_FEB 28
 #define FIRST_DAY 1
+#define TOTAL_MINUTES_PER_DAY 1140
 
 //home page of the Er system which has 6 options:
 //selection 1: add new patient
@@ -499,7 +500,7 @@ void Er::get_non_critical() {
 }
 
 //calculate patient's waiting time
-//PRE:   None
+//PRE:   admin_data less than current_date
 //POST:  None
 //PARAM: admintion date
 //PARAM: admintion hour
@@ -518,31 +519,45 @@ int Er::compare_date(Date admin_date, int admin_hr, int admin_min) {
 	int current_year = ltm->tm_year + 1900;
 	int current_mon = ltm->tm_mon + 1;
 	int current_day = ltm->tm_mday;
+	Date current_date(current_year, current_mon, current_day);
 	// total time in minutes
-	int total_admin = admin_hr * 60 + admin_min;
-	int total_min = current_hour * 60 + current_minute;
-	if (admin_year == current_year) {
-		if (admin_mon == current_mon) {
-			if (admin_day == current_day) {
-				return total_min - total_admin;				
-			}
-			else { // diff day
-				int diff_day = current_day - admin_day;
-				total_min += 24 * diff_day * 60;
-				return total_min - total_admin;			
-			}
-		}
-		else { //diff month
-			total_min += current_mon * 24 * 60;
-			total_admin += admin_mon * 24 * 60;
-			return total_min - total_admin;
-		}
+	int total_admin_min = admin_hr * 60 + admin_min;
+	int total_current_min = current_hour * 60 + current_minute;
+
+	if (admin_date == current_date) {
+		return total_current_min - total_admin_min;
 	}
 	else {
-		total_min += current_year * 24 * 60;
-		total_admin += admin_year * 24 * 60;
-		return total_min - total_admin;
+		int days_passed{ 0 };
+		while (admin_date != current_date) {
+			++admin_date;
+			++days_passed;
+		}
+		int minutes_passed = days_passed * TOTAL_MINUTES_PER_DAY;
+		return minutes_passed - total_current_min - total_admin_min;
 	}
+	//if (admin_year == current_year) {
+	//	if (admin_mon == current_mon) {
+	//		if (admin_day == current_day) {
+	//			return total_current_min - total_admin;
+	//		}
+	//		else { // diff day
+	//			int diff_day = current_day - admin_day;
+	//			total_current_min += 24 * diff_day * 60;
+	//			return total_current_min - total_admin;
+	//		}
+	//	}
+	//	else { //diff month
+	//		total_current_min += current_mon * 24 * 60;
+	//		total_admin += admin_mon * 24 * 60;
+	//		return total_current_min - total_admin;
+	//	}
+	//}
+	//else {
+	//	total_current_min += current_year * 24 * 60;
+	//	total_admin += admin_year * 24 * 60;
+	//	return total_current_min - total_admin;
+	//}
 }
 
 //promote patient's category, if they meet criteria.

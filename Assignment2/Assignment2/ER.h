@@ -20,7 +20,7 @@ public:
 	virtual void home_page() override;
 	virtual string category_page() override;
 	virtual void retry_home(bool is_error) override;
-	void back_home(double &zero);
+	void back_home();
 
 	//start system
 	void system_start() {home_page();}

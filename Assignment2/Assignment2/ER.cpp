@@ -41,7 +41,7 @@ void Er::home_page() {
 		break;
 	case 2:
 		get_next_patient();
-		back_home(choose);
+		back_home();
 		break;
 	case 3:
 		change_category();
@@ -56,7 +56,7 @@ void Er::home_page() {
 		break;
 	case 6:
 		print_patient();
-		back_home(choose);
+		back_home();
 		break;
 	case 0:
 		exit(1);
@@ -138,28 +138,20 @@ void Er::retry_home(bool is_error) {
 	}
 	home_page();
 }
-
+#include<conio.h>
 //go back to home page when some operation finished
 //need to enter 0 to back to home
 //pre:
 //post:
 //param: zero to check whether the user enter a 0 or not
 //return:
-void Er::back_home(double & zero)
+void Er::back_home()
 {
 	print_border(28);
-	cout << "press 0 to return to page: ";
-	cin >> zero;
-	while (cin.fail() || zero != (int)zero || zero != 0) {
-		print_border(27);
-		cout << "*Invalid, please try again* " << endl;
-		print_border(27);
-		cout << "press 0 to return to page: ";
-		cin.clear();
-		cin.ignore(std::numeric_limits<streamsize>::max(), '\n');
-		cin >> zero;
-	}
-	home_page();
+	//system("pause");
+	cout << "press any key to return to home page: " << flush;
+	_getch();
+	home_page();	
 }
 
 //add new patient to the list and sort by category from 0 ~ 5
@@ -455,6 +447,9 @@ void Er::sort_patients() {
 			x = a.get_minute();
 			y = b.get_minute();
 		}
+		else {
+			x = y = 0;
+		}
 		return (x < y);
 	});
 }
@@ -557,7 +552,6 @@ void Er::promo_cate(erPatient& temp) {
 	//3. find sepecific 
 	//get sepecific promotion rule
 	int cate_num = get_cate_num(temp.get_category());
-	Date updated_adminDate = temp.get_updated_adminDate();
 	int admin_hr = temp.get_hour();
 	int admin_min = temp.get_minute();
 	// update admin time
@@ -567,7 +561,7 @@ void Er::promo_cate(erPatient& temp) {
 	int hour = ltm->tm_hour;
 	int minute = ltm->tm_min;
 
-	int diff = compare_date(updated_adminDate, admin_hr, admin_min);
+	int diff = compare_date(temp.get_updated_adminDate(), admin_hr, admin_min);
 	switch (cate_num)
 	{
 	case 2:
@@ -695,6 +689,7 @@ bool Er::load_file(){
 			category = temp.at(i * LINE_OFFSET + 12);
 			erPatient temp_patient(first, middle, last, year, month, days, phn, hour, minute, symptoms, category);
 			temp_patient.set_adminDate(ad_year, ad_mon, ad_day);
+			temp_patient.set_updated_adminDate(updated_ad_year, updated_ad_mon, updated_ad_day);
 
 			temp_patient.set_display_hour(dis_hr);
 			temp_patient.set_display_minute(dis_min);

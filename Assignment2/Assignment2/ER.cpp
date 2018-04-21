@@ -534,7 +534,7 @@ int Er::compare_date(Date admin_date, int admin_hr, int admin_min) {
 			++days_passed;
 		}
 		int minutes_passed = days_passed * TOTAL_MINUTES_PER_DAY;
-		return minutes_passed - total_current_min - total_admin_min;
+		return minutes_passed + total_current_min - total_admin_min;
 	}
 	//if (admin_year == current_year) {
 	//	if (admin_mon == current_mon) {

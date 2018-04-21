@@ -140,7 +140,7 @@ void Er::retry_home(bool is_error) {
 }
 #include<conio.h>
 //go back to home page when some operation finished
-//need to enter 0 to back to home
+//need to press any key on keyboard
 //pre:
 //post:
 //param: zero to check whether the user enter a 0 or not

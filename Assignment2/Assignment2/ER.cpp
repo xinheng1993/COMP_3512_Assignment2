@@ -500,7 +500,7 @@ void Er::get_non_critical() {
 }
 
 //calculate patient's waiting time
-//PRE:   admin_data less than current_date
+//PRE:   admin_data less or equal than current_date (same as hour and minute)
 //POST:  None
 //PARAM: admintion date
 //PARAM: admintion hour
